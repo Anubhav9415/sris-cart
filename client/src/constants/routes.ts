@@ -1,0 +1,36 @@
+export const ROUTES = {
+  HOME: "/",
+  PRODUCTS: "/products",
+  PRODUCT_CATEGORY: "/products/:category",
+  PRODUCT_DETAILS: "/products/:category/:id",
+  CART: "/cart",
+  ADD_ADDRESS: "/add-address",
+  MY_ORDERS: "/my-orders",
+  TRACK_ORDER: "/track-order/:orderId",
+  PROFILE: "/profile",
+  CONTACT: "/contact",
+  FAQ: "/faq",
+  OFFERS: "/offers",
+  DELIVERY_INFO: "/delivery-info",
+  RETURN_REFUND: "/return-refund",
+  LOADER: "/loader",
+  RIDER: {
+    ROOT: "/rider",
+    EARNINGS: "earnings",
+    PROFILE: "profile",
+    CHANGE_PASSWORD: "change-password",
+  },
+  SELLER: {
+    ROOT: "/seller",
+    PRODUCT_LIST: "product-list",
+    ORDERS: "orders",
+    PROFILE: "profile",
+    CHANGE_PASSWORD: "change-password",
+  },
+  ADMIN: {
+    ROOT: "/admin",
+    USERS: "users",
+    SELLERS: "sellers",
+    RIDERS: "riders",
+  }
+};
