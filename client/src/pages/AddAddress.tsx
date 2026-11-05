@@ -7,7 +7,7 @@ import { RootState } from "../store";
 import { MapPin, Navigation, Info } from "lucide-react";
 import L from "leaflet";
 
-const SELLER_COORDS = { lat: 22.6030, lng: 88.3660 };
+const SELLER_COORDS = { lat: 22.3072, lng: 73.1812 }; // Vadodara, Gujarat
 
 const Inputfield = ({ type, placeholder, name, handleChange, address }: any) => (
   <input
@@ -102,15 +102,15 @@ const AddAddress = () => {
       // Add Seller Marker
       L.marker([SELLER_COORDS.lat, SELLER_COORDS.lng], { icon: storeIcon })
         .addTo(map)
-        .bindPopup("<b>SrisCart Hub</b><br>Baghbazar, Kolkata")
+        .bindPopup("<b>SrisCart Hub</b><br>Vadodara, Gujarat")
         .openPopup();
 
-      // Draw 4km Delivery Range Circle
+      // Draw 50km Delivery Range Circle
       L.circle([SELLER_COORDS.lat, SELLER_COORDS.lng], {
         color: "#e2a300",
         fillColor: "#fcd34d",
         fillOpacity: 0.15,
-        radius: 4000, // 4000 meters = 4 km
+        radius: 50000, // 50 km
       }).addTo(map);
 
       // Custom Customer Home Icon
@@ -161,7 +161,7 @@ const AddAddress = () => {
     const dist = getDistance(SELLER_COORDS.lat, SELLER_COORDS.lng, lat, lng);
     setDistance(dist);
 
-    const withinRange = dist <= 4.0;
+    const withinRange = dist <= 50.0;
     setIsWithinRange(withinRange);
 
     const homeIcon = customIcon || L.divIcon({
@@ -214,7 +214,7 @@ const AddAddress = () => {
     }
 
     if (!isWithinRange) {
-      toast.error("Cannot save: Address is outside our 4km delivery range!");
+      toast.error("Cannot save: Address is outside our 50km delivery range!");
       return;
     }
 
@@ -248,7 +248,7 @@ const AddAddress = () => {
           <MapPin className="w-8 h-8 text-primary" />
           <span>Add Shipping <span className="text-primary bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">Address</span></span>
         </h1>
-        <p className="text-gray-500 text-sm mt-1">Please fill in your address and pin your exact location on the map within our 4km zone.</p>
+        <p className="text-gray-500 text-sm mt-1">Please fill in your address and pin your exact location on the map within our 50km zone.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -376,7 +376,7 @@ const AddAddress = () => {
                 <span>Zone Details</span>
               </div>
               <p className="text-gray-500 leading-normal">
-                Deliveries are only supported within a <b>4.0 km</b> radius of our primary hub.
+                Deliveries are only supported within a <b>50 km</b> radius of our primary hub.
               </p>
               {distance !== null && (
                 <div className="pt-1.5 border-t border-gray-100">

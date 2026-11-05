@@ -4,7 +4,7 @@ import { setCartItems } from "../store/cartSlice";
 import toast from "react-hot-toast";
 
 const apiClient = axiosInstance.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: import.meta.env.VITE_BACKEND_URL || "",
   withCredentials: true,
 });
 
@@ -62,8 +62,9 @@ apiClient.interceptors.response.use(
       try {
         // Request token refresh using a clean isolated axios call
         // (to prevent interceptor loops)
+        const backendUrl = import.meta.env.VITE_BACKEND_URL || "";
         await axiosInstance.get(
-          `${import.meta.env.VITE_BACKEND_URL}${refreshUrl}`,
+          `${backendUrl}${refreshUrl}`,
           { withCredentials: true }
         );
 

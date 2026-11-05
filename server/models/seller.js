@@ -9,8 +9,8 @@ const sellerSchema = new mongoose.Schema(
     phone: { type: String, default: "" },
     address: { type: String, default: "" },
     status: { type: String, enum: ["Active", "Inactive"], default: "Active" },
-    latitude: { type: Number, default: 22.6030 },
-    longitude: { type: Number, default: 88.3660 },
+    latitude: { type: Number, default: 22.3072 },  // Vadodara, Gujarat
+    longitude: { type: Number, default: 73.1812 },
     gstNumber: { type: String, default: "" },
     branch: { type: String, default: "" },
     refreshToken: { type: String, default: "" },

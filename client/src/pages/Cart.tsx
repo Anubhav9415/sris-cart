@@ -16,7 +16,7 @@ import {
 } from "../store/cartSlice";
 import { RootState, AppDispatch } from "../store";
 
-const SELLER_COORDS = { lat: 22.6030, lng: 88.3660 };
+const SELLER_COORDS = { lat: 22.3072, lng: 73.1812 }; // Vadodara, Gujarat
 
 const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
   const R = 6371; // km
@@ -75,7 +75,7 @@ const Cart = () => {
       selectedAdress.latitude,
       selectedAdress.longitude
     );
-    return { distance: dist, isWithinRange: dist <= 4.0, hasCoords: true };
+    return { distance: dist, isWithinRange: dist <= 50.0, hasCoords: true };
   };
 
   const { distance: addressDistance, isWithinRange: isAddressWithinRange, hasCoords } = getAddressRangeStatus();
