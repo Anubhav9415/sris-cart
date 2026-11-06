@@ -59,7 +59,7 @@ const DeliveryInfo = () => {
             <span>Delivery Coverage</span>
           </h2>
           <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4">
-            We currently deliver express groceries in major residential zones across Bengaluru, Karnataka, including Indiranagar, HSR Layout, Koramangala, Whitefield, and surrounding neighborhoods.
+            We currently deliver express groceries across Vadodara, Gujarat, including Ajwa Road, Alkapuri, Manjalpur, Sayajigunj, Gotri, Karelibaug, and surrounding residential neighborhoods.
           </p>
           <p className="text-gray-400 text-xs leading-relaxed">
             *If your address is outside our 30-min express radius, delivery might take up to 45 minutes. Enter your location at checkout to check coverage.
@@ -72,7 +72,7 @@ const DeliveryInfo = () => {
             <span>Timing & Slots</span>
           </h2>
           <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">
-            Deliveries are made from **6:00 AM to 10:00 PM** every single day. Orders placed after 9:45 PM will automatically be scheduled for the early morning slot starting at 6:00 AM.
+            Deliveries are made from **7:00 AM to 10:00 PM** every single day. Orders placed after 9:45 PM will automatically be scheduled for the early morning slot starting at 7:00 AM.
           </p>
         </div>
       </div>

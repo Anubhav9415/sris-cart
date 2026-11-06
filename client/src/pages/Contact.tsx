@@ -57,8 +57,8 @@ const Contact = () => {
               <div>
                 <h3 className="font-semibold text-gray-800 text-sm">Our Location</h3>
                 <p className="text-gray-500 text-xs sm:text-sm mt-1">
-                  123 Fresh Way, Food District,<br />
-                  Bengaluru, Karnataka 560001
+                  Uma Society, Ajwa Road,<br />
+                  Vadodara, Gujarat 390019
                 </p>
               </div>
             </div>
@@ -71,9 +71,9 @@ const Contact = () => {
               <div>
                 <h3 className="font-semibold text-gray-800 text-sm">Call Us</h3>
                 <p className="text-gray-500 text-xs sm:text-sm mt-1 hover:text-primary transition-colors">
-                  <a href="tel:+919876543210">+91 98765 43210</a>
+                  <a href="tel:+919696089688">+91 96960 89688</a>
                 </p>
-                <p className="text-gray-400 text-[11px] mt-0.5">Mon - Sat: 9 AM - 6 PM</p>
+                <p className="text-gray-400 text-[11px] mt-0.5">Mon - Sat: 9:00 AM - 8:00 PM</p>
               </div>
             </div>
 
@@ -85,10 +85,7 @@ const Contact = () => {
               <div>
                 <h3 className="font-semibold text-gray-800 text-sm">Email Support</h3>
                 <p className="text-gray-500 text-xs sm:text-sm mt-1 hover:text-primary transition-colors">
-                  <a href="mailto:support@sriscart.com">support@sriscart.com</a>
-                </p>
-                <p className="text-gray-500 text-xs sm:text-sm hover:text-primary transition-colors">
-                  <a href="mailto:info@sriscart.com">info@sriscart.com</a>
+                  <a href="mailto:supportsriscart@gmail.com">supportsriscart@gmail.com</a>
                 </p>
               </div>
             </div>
@@ -101,9 +98,9 @@ const Contact = () => {
               <div>
                 <h3 className="font-semibold text-gray-800 text-sm">Delivery Hours</h3>
                 <p className="text-gray-500 text-xs sm:text-sm mt-1">
-                  Daily: 6:00 AM - 10:00 PM
+                  Daily: 7:00 AM - 10:00 PM
                 </p>
-                <p className="text-gray-400 text-[11px] mt-0.5">30-min express deliveries</p>
+                <p className="text-gray-400 text-[11px] mt-0.5">30-min express deliveries / Same day delivery</p>
               </div>
             </div>
           </div>
