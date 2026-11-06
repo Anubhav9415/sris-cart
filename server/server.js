@@ -80,9 +80,10 @@ app.use("/api/admin", adminRouter);
 // Global Error Handler Middleware
 app.use(errorHandler);
 
-// Always start the HTTP server so Vercel Services or local processes can bind to the assigned port
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
 
 export default app;
