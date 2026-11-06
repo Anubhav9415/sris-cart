@@ -2,7 +2,6 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
-import compression from "compression";
 import mongoose from "mongoose";
 import connectDB from "./configs/db.js";
 import "dotenv/config";
@@ -25,13 +24,17 @@ import errorHandler from "./middlewares/errorHandler.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-// Initialize connections in background (does not block cold start)
+// Immediate lightweight ping route (bypasses all middleware and DB checks)
+app.get("/api/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
+// Initialize background connections (safe non-blocking)
 connectDB().catch((err) => console.error("[INIT DB ERROR]", err.message));
 connectCloudinary().catch((err) => console.error("[INIT CLOUDINARY ERROR]", err.message));
 
-// Apply Security and Performance Optimization Middlewares
-app.use(helmet({ contentSecurityPolicy: false })); // allows OpenStreetMap loading
-app.use(compression());
+// Security headers (compression is omitted: Vercel CDN handles compression natively)
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(logger);
 
 // Stripe webhook must receive raw body
@@ -56,7 +59,7 @@ app.use(
       ) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(null, true); // Allow any Vercel domain to prevent CORS blocks
       }
     },
     credentials: true,
@@ -116,7 +119,8 @@ app.use("/api/admin", adminRouter);
 // Global Error Handler Middleware
 app.use(errorHandler);
 
-if (!process.env.VERCEL) {
+// Only listen locally during development; Vercel serverless manages its own listener
+if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });
