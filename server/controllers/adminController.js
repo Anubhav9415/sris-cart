@@ -8,7 +8,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 // Admin Login
 export const adminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const adminEmail = process.env.ADMIN_EMAIL || "admin@sriscart.com";
+  const adminEmail = process.env.ADMIN_EMAIL || "supportsriscart@gmail.com";
   const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
 
   if (email === adminEmail && password === adminPassword) {

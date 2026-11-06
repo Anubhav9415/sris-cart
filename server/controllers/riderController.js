@@ -10,26 +10,26 @@ const seedRiders = async () => {
   if (count === 0) {
     const hashedPassword = await bcrypt.hash("rider123", 10);
     
-    // Seed Rider 1 (Rahul - near Baghbazar)
+    // Seed Rider 1 (Rahul - near Vadodara Store)
     await Rider.create({
       name: "Rahul (Rider 1)",
       email: "rider1@sriscart.com",
       password: hashedPassword,
       phone: "+91 99999 88888",
       status: "Active",
-      latitude: 22.6010,
-      longitude: 88.3690,
+      latitude: 22.3080,
+      longitude: 73.1820,
     });
 
-    // Seed Rider 2 (Amit - further away)
+    // Seed Rider 2 (Amit - further away in Vadodara)
     await Rider.create({
       name: "Amit (Rider 2)",
       email: "rider2@sriscart.com",
       password: hashedPassword,
       phone: "+91 99999 77777",
       status: "Active",
-      latitude: 22.5600,
-      longitude: 88.3500,
+      latitude: 22.3150,
+      longitude: 73.1750,
     });
 
     console.log("Default riders seeded successfully.");
@@ -74,15 +74,15 @@ export const riderRegister = asyncHandler(async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Default coordinates in Baghbazar Kolkata
+  // Default coordinates in Vadodara Gujarat
   const newRider = await Rider.create({
     name,
     email,
     password: hashedPassword,
     phone: phone || "",
     status: "Active",
-    latitude: 22.6030,
-    longitude: 88.3660,
+    latitude: 22.3072,
+    longitude: 73.1812,
   });
 
   const { accessToken, refreshToken } = generateRiderTokens(newRider.email);
@@ -233,8 +233,8 @@ export const acceptOrder = asyncHandler(async (req, res) => {
   order.riderId = riderId;
   order.status = "rider_assigned";
   // Start rider position at store
-  order.riderLatitude = 22.6030;
-  order.riderLongitude = 88.3660;
+  order.riderLatitude = 22.3072;
+  order.riderLongitude = 73.1812;
   await order.save();
 
   return res.json({ success: true, message: "Order accepted successfully", order });

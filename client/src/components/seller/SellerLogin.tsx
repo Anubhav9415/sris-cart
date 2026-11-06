@@ -150,7 +150,7 @@ const SellerLogin = () => {
                     onChange={(e) => setBranch(e.target.value)}
                     value={branch}
                     type="text"
-                    placeholder="e.g. Baghbazar"
+                    placeholder="e.g. Ajwa Road, Vadodara"
                     required
                     className="border border-gray-200 rounded-lg w-full p-2.5 outline-none focus:border-primary transition"
                   />

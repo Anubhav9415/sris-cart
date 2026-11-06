@@ -11,7 +11,7 @@ interface AdminAnalyticsProps {
   loading: boolean;
 }
 
-const SELLER_COORDS = { lat: 22.6030, lng: 88.3660 };
+const SELLER_COORDS = { lat: 22.3072, lng: 73.1812 };
 
 const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
   stats,
@@ -153,7 +153,7 @@ const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
     });
     const primaryMarker = L.marker([SELLER_COORDS.lat, SELLER_COORDS.lng], { icon: primaryIcon })
       .addTo(mapRef.current)
-      .bindPopup("<b>SrisCart Primary Baghbazar Store</b>");
+      .bindPopup("<b>SrisCart Primary Store (Uma Society, Ajwa Road, Vadodara)</b>");
     markersRef.current.push(primaryMarker);
 
     // Plot Sellers
@@ -468,7 +468,7 @@ const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
           />
 
           <p className="text-[11px] text-gray-400 leading-normal text-center mt-3">
-            Physical mapping of all onboarded merchant stores (yellow) and delivery rider agents (green/gray) around the core Baghbazar hub.
+            Physical mapping of all onboarded merchant stores (yellow) and delivery rider agents (green/gray) around the core Vadodara hub (Ajwa Road).
           </p>
         </div>
       </div>

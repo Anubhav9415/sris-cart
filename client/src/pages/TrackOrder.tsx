@@ -6,7 +6,7 @@ import { MapPin, Bike, Clock, ArrowLeft, CheckCircle2, ShieldAlert } from "lucid
 import toast from "react-hot-toast";
 import L from "leaflet";
 
-const SELLER_COORDS = { lat: 22.6030, lng: 88.3660 };
+const SELLER_COORDS = { lat: 22.3072, lng: 73.1812 };
 
 // Helper to interpolate points for the rider path
 const generateRoutePoints = (start: [number, number], end: [number, number], steps = 50) => {
@@ -271,9 +271,9 @@ const TrackOrder = () => {
     const statusLower = order?.status?.toLowerCase() || "order_placed";
     if (statusLower === "delivered") return "Your order has been delivered!";
     if (statusLower === "out_for_delivery" || statusLower === "out for delivery") {
-      if (progress === 0) return "Rider picking up items from Baghbazar Store...";
+      if (progress === 0) return "Rider picking up items from Vadodara Store (Ajwa Road)...";
       if (progress < 40) return "Rider has left the store and is heading your way.";
-      if (progress < 85) return "Rider is passing Baghbazar Street. On-track for delivery.";
+      if (progress < 85) return "Rider is passing Ajwa Road. On-track for delivery.";
       if (progress < 100) return "Almost there! Rider is entering your neighborhood.";
       return "Rider has arrived at your address!";
     }

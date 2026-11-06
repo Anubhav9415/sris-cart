@@ -12,8 +12,8 @@ const SellerProfile = () => {
   const [address, setAddress] = useState("");
   const [gstNumber, setGstNumber] = useState("");
   const [branch, setBranch] = useState("");
-  const [latitude, setLatitude] = useState<number>(22.6030);
-  const [longitude, setLongitude] = useState<number>(88.3660);
+  const [latitude, setLatitude] = useState<number>(22.3072);
+  const [longitude, setLongitude] = useState<number>(73.1812);
   
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
@@ -90,8 +90,8 @@ const SellerProfile = () => {
         setGstNumber(data.seller.gstNumber || "");
         setBranch(data.seller.branch || "");
         
-        const lat = data.seller.latitude ?? 22.6030;
-        const lng = data.seller.longitude ?? 88.3660;
+        const lat = data.seller.latitude ?? 22.3072;
+        const lng = data.seller.longitude ?? 73.1812;
         setLatitude(lat);
         setLongitude(lng);
 
@@ -268,7 +268,7 @@ const SellerProfile = () => {
                 disabled={loading}
                 value={branch}
                 onChange={(e) => setBranch(e.target.value)}
-                placeholder="e.g. Baghbazar"
+                placeholder="e.g. Ajwa Road, Vadodara"
                 className="w-full outline-none py-3 px-4 rounded-xl border border-gray-200 focus:border-primary text-sm text-gray-700 font-medium transition"
               />
             </div>

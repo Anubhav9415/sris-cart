@@ -15,7 +15,7 @@ import L from "leaflet";
 import ActiveJobCard from "../../components/rider/ActiveJobCard";
 import AvailableJobsList from "../../components/rider/AvailableJobsList";
 
-const SELLER_COORDS = { lat: 22.6030, lng: 88.3660 };
+const SELLER_COORDS = { lat: 22.3072, lng: 73.1812 };
 
 const generateRoutePoints = (start: [number, number], end: [number, number], steps = 50) => {
   const points: [number, number][] = [];
@@ -279,7 +279,7 @@ const ActiveDeliveries = () => {
     try {
       const data = await acceptOrder(orderId);
       if (data.success) {
-        toast.success("Job accepted! Head to Baghbazar Store to collect items.");
+        toast.success("Job accepted! Head to Vadodara Store (Ajwa Road) to collect items.");
         fetchJobs();
       } else {
         toast.error(data.message);

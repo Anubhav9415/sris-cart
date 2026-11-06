@@ -50,8 +50,8 @@ export const sellerRegister = asyncHandler(async (req, res) => {
     branch: branch || "",
     phone: phone || "",
     address: address || "",
-    latitude: latitude || 22.6030,
-    longitude: longitude || 88.3660,
+    latitude: latitude || 22.3072,
+    longitude: longitude || 73.1812,
     status: "Active",
   });
 

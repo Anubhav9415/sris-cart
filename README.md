@@ -6,11 +6,11 @@ SrisCart is a modern, high-performance web application designed for express groc
 
 ## 🚀 Key Features Catalog (Why & When Implemented)
 
-### 1. 📍 4 km Delivery Range Check (Baghbazar, Kolkata)
+### 1. 📍 50 km Delivery Range Check (Vadodara, Gujarat)
 * **When**: Implemented during the shipping address configuration updates.
-* **Why**: To prevent out-of-bounds orders and guarantee delivery SLA times, we enforce a strict 4.0 km range boundary around the primary store hub (`22.6030, 88.3660`).
+* **Why**: To ensure timely express grocery deliveries, we enforce a 50 km range boundary around the primary store hub in Vadodara (`22.3072, 73.1812`).
 * **Details**:
-  - Displays a custom delivery zone circle (4 km radius) using Leaflet.js maps.
+  - Displays a custom delivery zone circle (50 km radius) using Leaflet.js maps centered at Uma Society, Ajwa Road, Vadodara.
   - Allows users to pin their exact location using a draggable marker or the Geolocation API.
   - Enforces distance validation in the checkout cart and prevents checkout for addresses out of bounds.
 
@@ -106,7 +106,7 @@ SrisCart is a modern, high-performance web application designed for express groc
 
 ## 📋 Full Walkthrough Testing Process
 
-1. **Add Address**: Log in as a Buyer, allow Geolocation or pin your coordinates inside the 4.0 km circle around Baghbazar Kolkata Ghat, and save the address.
+1. **Add Address**: Log in as a Buyer, allow Geolocation or pin your coordinates inside the 50 km circle around Vadodara Store (Ajwa Road), and save the address.
 2. **Place Order**: Add products to cart, select your address, choose COD, and checkout.
 3. **Accept Order (Seller)**: Go to `/seller`, find the order, and choose `Order Accepted`.
 4. **Accept Job & Simulate (Rider)**: Go to `/rider`, accept the job, click `Start Transit Simulation` to watch coordinates upload dynamically.

@@ -9,7 +9,8 @@ const authAdmin = async (req, res, next) => {
 
   try {
     const tokenDecoded = jwt.verify(adminToken, process.env.JWT_SECRET);
-    if (tokenDecoded && tokenDecoded.email === "admin@sriscart.com") {
+    const adminEmail = process.env.ADMIN_EMAIL || "supportsriscart@gmail.com";
+    if (tokenDecoded && (tokenDecoded.email === adminEmail || tokenDecoded.email === "admin@sriscart.com")) {
       req.admin = tokenDecoded;
       return next();
     } else {
