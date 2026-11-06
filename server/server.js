@@ -59,7 +59,7 @@ app.use(
       ) {
         callback(null, true);
       } else {
-        callback(null, true); // Allow any Vercel domain to prevent CORS blocks
+        callback(null, true); // Allow all Vercel environments
       }
     },
     credentials: true,
@@ -119,11 +119,9 @@ app.use("/api/admin", adminRouter);
 // Global Error Handler Middleware
 app.use(errorHandler);
 
-// Only listen locally during development; Vercel serverless manages its own listener
-if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) {
-  app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-  });
-}
+// Listen on the dynamic port assigned by Vercel Services or local port 4000
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 export default app;
