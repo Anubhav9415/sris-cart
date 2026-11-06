@@ -59,10 +59,20 @@ const DeliveryInfo = () => {
             <span>Delivery Coverage</span>
           </h2>
           <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4">
-            We currently deliver express groceries across Vadodara, Gujarat, including Ajwa Road, Alkapuri, Manjalpur, Sayajigunj, Gotri, Karelibaug, and surrounding residential neighborhoods.
+            We currently deliver express groceries across <strong>Vadodara, Gujarat</strong> with fast doorstep delivery to all primary localities:
           </p>
+          <div className="flex flex-wrap gap-2 mb-4">
+            {["Ajwa Road", "Alkapuri", "Manjalpur", "Sayajigunj", "Gotri", "Karelibaug"].map((area, index) => (
+              <span
+                key={index}
+                className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200"
+              >
+                📍 {area}
+              </span>
+            ))}
+          </div>
           <p className="text-gray-400 text-xs leading-relaxed">
-            *If your address is outside our 30-min express radius, delivery might take up to 45 minutes. Enter your location at checkout to check coverage.
+            *If your address is within our 50 km delivery radius, enter your location at checkout to place your order with express delivery.
           </p>
         </div>
 
