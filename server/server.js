@@ -24,10 +24,21 @@ import errorHandler from "./middlewares/errorHandler.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-await connectDB();
-await connectCloudinary();
+// Initialize connections
+connectDB().catch((err) => console.error("[INIT DB ERROR]", err.message));
+connectCloudinary().catch((err) => console.error("[INIT CLOUDINARY ERROR]", err.message));
 
-const allowedOrigins = ["http://localhost:5173", "https://sris-cart.vercel.app"];
+// Ensure DB is ready on each request
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://sris-cart.vercel.app",
+  "https://sris-cart-orcin.vercel.app",
+];
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
@@ -69,10 +80,9 @@ app.use("/api/admin", adminRouter);
 // Global Error Handler Middleware
 app.use(errorHandler);
 
-if (!process.env.VERCEL) {
-  app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
-}
+// Always start the HTTP server so Vercel Services or local processes can bind to the assigned port
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 export default app;

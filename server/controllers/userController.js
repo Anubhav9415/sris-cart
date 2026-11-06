@@ -33,13 +33,16 @@ export const register = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, message: "Missing Details" });
   }
 
-  const existingUser = await User.findOne({ email });
+  const normalizedEmail = email.toLowerCase().trim();
+  const existingUser = await User.findOne({
+    email: { $regex: new RegExp(`^${normalizedEmail}$`, "i") },
+  });
   if (existingUser) {
     return res.status(400).json({ success: false, message: "User already exists" });
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await User.create({ name, email, password: hashedPassword });
+  const user = await User.create({ name, email: normalizedEmail, password: hashedPassword });
 
   const { accessToken, refreshToken } = generateTokens(user._id);
 
@@ -62,7 +65,10 @@ export const login = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, message: "Email and password are required" });
   }
 
-  const user = await User.findOne({ email });
+  const normalizedEmail = email.toLowerCase().trim();
+  const user = await User.findOne({
+    email: { $regex: new RegExp(`^${normalizedEmail}$`, "i") },
+  });
   if (!user) {
     return res.status(401).json({ success: false, message: "Invalid email and password" });
   }
