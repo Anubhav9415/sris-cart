@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
+import mongoose from "mongoose";
 import connectDB from "./configs/db.js";
 import "dotenv/config";
 import userRouter from "./routes/userRoute.js";
@@ -24,15 +25,20 @@ import errorHandler from "./middlewares/errorHandler.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-// Initialize connections
+// Initialize connections in background (does not block cold start)
 connectDB().catch((err) => console.error("[INIT DB ERROR]", err.message));
 connectCloudinary().catch((err) => console.error("[INIT CLOUDINARY ERROR]", err.message));
 
-// Ensure DB is ready on each request
-app.use(async (req, res, next) => {
-  await connectDB();
-  next();
-});
+// Apply Security and Performance Optimization Middlewares
+app.use(helmet({ contentSecurityPolicy: false })); // allows OpenStreetMap loading
+app.use(compression());
+app.use(logger);
+
+// Stripe webhook must receive raw body
+app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
+
+app.use(express.json());
+app.use(cookieParser());
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -40,15 +46,6 @@ const allowedOrigins = [
   "https://sris-cart-orcin.vercel.app",
 ];
 
-app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
-
-// Apply Security and Performance Optimization Middlewares
-app.use(helmet({ contentSecurityPolicy: false })); // allows OpenStreetMap loading
-app.use(compression());
-app.use(logger);
-
-app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -66,7 +63,46 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => res.send("API is Working"));
+// Diagnostic Health Routes
+app.get(["/", "/api"], (req, res) => res.json({ status: "ok", message: "SrisCart API is Working" }));
+
+app.get("/api/health", async (req, res) => {
+  let dbStatus = "disconnected";
+  let dbError = null;
+
+  try {
+    await connectDB();
+    dbStatus = mongoose.connection.readyState === 1 ? "connected" : "connecting";
+  } catch (err) {
+    dbStatus = "failed";
+    dbError = err.message;
+  }
+
+  res.json({
+    status: "ok",
+    hasMongoUri: !!process.env.MONGODB_URI,
+    hasJwtSecret: !!process.env.JWT_SECRET,
+    hasCloudinary: !!(process.env.CLOUDINARY_NAME && process.env.CLOUDINARY_API_KEY),
+    hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
+    dbStatus,
+    dbError,
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Ensure DB is ready before handling DB-dependent routes
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    return res.status(503).json({
+      success: false,
+      message: `Database connection error: ${error.message}. Please check MongoDB Atlas IP whitelist (allow 0.0.0.0/0) and Vercel Environment Variables.`,
+    });
+  }
+});
+
 app.use("/api/user", userRouter);
 app.use("/api/seller", sellerRouter);
 app.use("/api/product", productRouter);
