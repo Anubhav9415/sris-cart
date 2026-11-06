@@ -27,12 +27,7 @@ const port = process.env.PORT || 4000;
 await connectDB();
 await connectCloudinary();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://sris-cart.vercel.app",
-  "https://sriscart.live",
-  "https://www.sriscart.live",
-];
+const allowedOrigins = ["http://localhost:5173", "https://sris-cart.vercel.app"];
 
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
@@ -49,8 +44,7 @@ app.use(
       if (
         !origin ||
         allowedOrigins.includes(origin) ||
-        origin.endsWith(".vercel.app") ||
-        origin.endsWith("sriscart.live")
+        origin.endsWith(".vercel.app")
       ) {
         callback(null, true);
       } else {
