@@ -24,84 +24,64 @@ import errorHandler from "./middlewares/errorHandler.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
-// Immediate lightweight ping route (bypasses all middleware and DB checks)
-app.get("/api/ping", (req, res) => {
-  res.status(200).send("pong");
-});
-
-// Initialize background connections (safe non-blocking)
+// Initialize DB connection (non-blocking, cached for serverless reuse)
 connectDB().catch((err) => console.error("[INIT DB ERROR]", err.message));
 connectCloudinary().catch((err) => console.error("[INIT CLOUDINARY ERROR]", err.message));
 
-// Security headers (compression is omitted: Vercel CDN handles compression natively)
+// Security headers
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(logger);
 
-// Stripe webhook must receive raw body
+// Stripe webhook must receive raw body — must come BEFORE express.json()
 app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
 app.use(express.json());
 app.use(cookieParser());
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://sris-cart.vercel.app",
-  "https://sris-cart-orcin.vercel.app",
-];
 
 app.use(
   cors({
     origin: (origin, callback) => {
       if (
         !origin ||
-        allowedOrigins.includes(origin) ||
+        origin.includes("localhost") ||
         origin.endsWith(".vercel.app")
       ) {
         callback(null, true);
       } else {
-        callback(null, true); // Allow all Vercel environments
+        callback(null, true);
       }
     },
     credentials: true,
   })
 );
 
-// Diagnostic Health Routes
-app.get(["/", "/api"], (req, res) => res.json({ status: "ok", message: "SrisCart API is Working" }));
-
+// Health check
 app.get("/api/health", async (req, res) => {
   let dbStatus = "disconnected";
-  let dbError = null;
-
   try {
     await connectDB();
     dbStatus = mongoose.connection.readyState === 1 ? "connected" : "connecting";
   } catch (err) {
-    dbStatus = "failed";
-    dbError = err.message;
+    dbStatus = "error: " + err.message;
   }
-
   res.json({
     status: "ok",
+    dbStatus,
     hasMongoUri: !!process.env.MONGODB_URI,
     hasJwtSecret: !!process.env.JWT_SECRET,
-    hasCloudinary: !!(process.env.CLOUDINARY_NAME && process.env.CLOUDINARY_API_KEY),
-    hasStripeKey: !!process.env.STRIPE_SECRET_KEY,
-    dbStatus,
-    dbError,
     timestamp: new Date().toISOString(),
   });
 });
 
-// Ensure DB is ready before handling DB-dependent routes
-app.use(async (req, res, next) => {
+// Ensure DB is connected before every API route
+app.use("/api", async (req, res, next) => {
   try {
     await connectDB();
     next();
   } catch (error) {
     return res.status(503).json({
       success: false,
-      message: `Database connection error: ${error.message}. Please check MongoDB Atlas IP whitelist (allow 0.0.0.0/0) and Vercel Environment Variables.`,
+      message: "Database unavailable: " + error.message,
     });
   }
 });
@@ -116,12 +96,14 @@ app.use("/api/ai", aiRouter);
 app.use("/api/rider", riderRouter);
 app.use("/api/admin", adminRouter);
 
-// Global Error Handler Middleware
+// Global Error Handler
 app.use(errorHandler);
 
-// Listen on the dynamic port assigned by Vercel Services or local port 4000
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+// Only listen locally — on Vercel, the app is imported as a handler, not started as a server
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
 
 export default app;
