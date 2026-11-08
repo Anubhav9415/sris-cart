@@ -1,22 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
+import { Product } from "../types";
+import { RootState } from "./index";
 
 interface WishlistState {
-  items: string[]; // Product IDs
+  items: Product[];
 }
 
-const loadWishlistFromStorage = (): string[] => {
+const loadWishlistFromStorage = (): Product[] => {
   try {
-    const saved = localStorage.getItem("sriscart_wishlist");
+    const saved = localStorage.getItem("sriscart_wishlist_items");
     return saved ? JSON.parse(saved) : [];
   } catch (e) {
     return [];
   }
 };
 
-const saveWishlistToStorage = (items: string[]) => {
+const saveWishlistToStorage = (items: Product[]) => {
   try {
-    localStorage.setItem("sriscart_wishlist", JSON.stringify(items));
+    localStorage.setItem("sriscart_wishlist_items", JSON.stringify(items));
   } catch (e) {
     console.error("Failed to persist wishlist", e);
   }
@@ -30,30 +31,26 @@ const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    toggleWishlist: (state, action: PayloadAction<{ id: string; name?: string }>) => {
-      const { id, name } = action.payload;
-      const index = state.items.indexOf(id);
+    toggleWishlist: (state, action: PayloadAction<Product>) => {
+      const prod = action.payload;
+      const index = state.items.findIndex((item) => item._id === prod._id);
       if (index >= 0) {
         state.items.splice(index, 1);
-        toast.success(`${name || "Item"} removed from wishlist`, { id: "wishlist-remove" });
       } else {
-        state.items.push(id);
-        toast.success(`${name || "Item"} added to wishlist ❤️`, { id: "wishlist-add" });
+        state.items.push(prod);
       }
       saveWishlistToStorage(state.items);
     },
-    addToWishlist: (state, action: PayloadAction<{ id: string; name?: string }>) => {
-      const { id, name } = action.payload;
-      if (!state.items.includes(id)) {
-        state.items.push(id);
-        toast.success(`${name || "Item"} added to wishlist ❤️`, { id: "wishlist-add" });
+    addToWishlist: (state, action: PayloadAction<Product>) => {
+      const prod = action.payload;
+      if (!state.items.some((item) => item._id === prod._id)) {
+        state.items.push(prod);
         saveWishlistToStorage(state.items);
       }
     },
-    removeFromWishlist: (state, action: PayloadAction<{ id: string; name?: string }>) => {
-      const { id, name } = action.payload;
-      state.items = state.items.filter((item) => item !== id);
-      toast.success(`${name || "Item"} removed from wishlist`, { id: "wishlist-remove" });
+    removeFromWishlist: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+      state.items = state.items.filter((item) => item._id !== id);
       saveWishlistToStorage(state.items);
     },
     clearWishlist: (state) => {
@@ -63,8 +60,26 @@ const wishlistSlice = createSlice({
   },
 });
 
-export const { toggleWishlist, addToWishlist, removeFromWishlist, clearWishlist } =
-  wishlistSlice.actions;
+export const {
+  toggleWishlist,
+  addToWishlist,
+  removeFromWishlist,
+  clearWishlist,
+} = wishlistSlice.actions;
+
+export const selectWishlistItems = (state: RootState): Product[] =>
+  state.wishlist ? state.wishlist.items : [];
+
+export const selectWishlistCount = (state: RootState): number =>
+  state.wishlist && state.wishlist.items ? state.wishlist.items.length : 0;
+
+export const selectIsInWishlist =
+  (productId: string) =>
+  (state: RootState): boolean =>
+    Boolean(
+      state.wishlist &&
+        state.wishlist.items &&
+        state.wishlist.items.some((item) => item._id === productId)
+    );
 
 export default wishlistSlice.reducer;
-

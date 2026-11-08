@@ -114,7 +114,7 @@ const initialState: AuthState = {
   user: null,
   isSeller: false,
   showUserLogin: false,
-  isAppLoading: true,
+  isAppLoading: false,
 };
 
 const authSlice = createSlice({

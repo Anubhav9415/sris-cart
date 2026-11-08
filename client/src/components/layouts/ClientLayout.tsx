@@ -15,7 +15,7 @@ const ClientLayout = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       {showUserLogin ? <Login /> : null}
-      <main className="flex-grow px-6 md:px-16 lg:px-24 xl:px-32">
+      <main className="flex-grow w-full">
         <Outlet />
       </main>
       <Footer />
