@@ -18,6 +18,7 @@ import Offers from "../pages/Offers";
 import DeliveryInfo from "../pages/DeliveryInfo";
 import ReturnRefund from "../pages/ReturnRefund";
 import Loading from "../components/Loading";
+import Wishlist from "../pages/Wishlist";
 
 // Heavy Views & guards (lazy-loaded to reduce bundle size)
 const TrackOrder = lazy(() => import("../pages/TrackOrder"));
@@ -60,6 +61,7 @@ const AppRoutes = () => {
             <Route path={ROUTES.PRODUCT_CATEGORY} element={<ProductCategory />} />
             <Route path={ROUTES.PRODUCT_DETAILS} element={<ProductDetails />} />
             <Route path={ROUTES.CART} element={<Cart />} />
+            <Route path={ROUTES.WISHLIST} element={<Wishlist />} />
             <Route path={ROUTES.ADD_ADDRESS} element={<AddAddress />} />
             <Route path={ROUTES.MY_ORDERS} element={<MyOrders />} />
             <Route path={ROUTES.TRACK_ORDER} element={<TrackOrder />} />

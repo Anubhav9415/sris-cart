@@ -2,6 +2,7 @@ import { configureStore, Middleware } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
 import productsReducer from "./productsSlice";
 import cartReducer from "./cartSlice";
+import wishlistReducer from "./wishlistSlice";
 import { syncCart } from "../services/cartService";
 
 const cartSyncMiddleware: Middleware = (storeApi) => (next) => async (action: any) => {
@@ -35,6 +36,7 @@ export const store = configureStore({
     auth: authReducer,
     products: productsReducer,
     cart: cartReducer,
+    wishlist: wishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(cartSyncMiddleware),

@@ -71,4 +71,6 @@ export const selectCartAmount = (state: RootState) => {
   return Math.floor(totalAmount * 100) / 100;
 };
 
+export const selectCartTotal = selectCartAmount;
+
 export default cartSlice.reducer;

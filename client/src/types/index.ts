@@ -2,6 +2,12 @@ export interface Product {
   _id: string;
   name: string;
   category: string;
+  brand?: string;
+  unit?: string;
+  rating?: number;
+  reviewsCount?: number;
+  discount?: number;
+  specifications?: Record<string, string>;
   description: string[];
   price: number;
   offerPrice: number;

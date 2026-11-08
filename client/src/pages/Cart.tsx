@@ -160,25 +160,34 @@ const Cart = () => {
       return;
     }
 
-    if (code === "SRIS20") {
+    if (code === "SRIS20" || code === "FESTIVE20") {
       const discount = Math.round(cartAmount * 0.20 * 100) / 100;
       setDiscountAmount(discount);
-      setAppliedCoupon("SRIS20");
-      toast.success("Coupon SRIS20 applied! 20% off");
+      setAppliedCoupon(code);
+      toast.success(`Coupon ${code} applied! 20% off`);
       triggerConfetti();
-    } else if (code === "FESTIVE10") {
-      if (cartAmount < 100) {
-        toast.error("FESTIVE10 coupon requires a minimum order value of $100!");
+    } else if (code === "SRISFIRST") {
+      if (cartAmount < 499) {
+        toast.error("SRISFIRST requires a minimum order value of ₹499!");
         return;
       }
-      setDiscountAmount(10);
-      setAppliedCoupon("FESTIVE10");
-      toast.success("Coupon FESTIVE10 applied! Flat $10 off");
+      setDiscountAmount(100);
+      setAppliedCoupon("SRISFIRST");
+      toast.success("Coupon SRISFIRST applied! Flat ₹100 off");
       triggerConfetti();
-    } else if (code === "FREESHIP") {
-      setDiscountAmount(5);
-      setAppliedCoupon("FREESHIP");
-      toast.success("Coupon FREESHIP applied! Flat $5 off & Free Express Delivery!");
+    } else if (code === "FESTIVE10") {
+      if (cartAmount < 499) {
+        toast.error("FESTIVE10 coupon requires a minimum order value of ₹499!");
+        return;
+      }
+      setDiscountAmount(50);
+      setAppliedCoupon("FESTIVE10");
+      toast.success("Coupon FESTIVE10 applied! Flat ₹50 off");
+      triggerConfetti();
+    } else if (code === "FREESHIP" || code === "FREEDEL") {
+      setDiscountAmount(40);
+      setAppliedCoupon(code);
+      toast.success(`Coupon ${code} applied! Free Express Delivery (₹40 off)`);
       triggerConfetti();
     } else if (code === "SPIN10") {
       const discount = Math.round(cartAmount * 0.10 * 100) / 100;
@@ -193,9 +202,9 @@ const Cart = () => {
       toast.success("Coupon SPIN15 applied! 15% off");
       triggerConfetti();
     } else if (code === "SPIN5") {
-      setDiscountAmount(5);
+      setDiscountAmount(25);
       setAppliedCoupon("SPIN5");
-      toast.success("Coupon SPIN5 applied! Flat $5 off");
+      toast.success("Coupon SPIN5 applied! Flat ₹25 off");
       triggerConfetti();
     } else {
       toast.error("Invalid Coupon Code!");
@@ -557,7 +566,7 @@ const Cart = () => {
             )}
             {!appliedCoupon && (
               <p className="text-[10px] text-gray-400 mt-1.5 leading-relaxed">
-                Try <span className="font-bold text-gray-500">SRIS20</span> (20% off) or <span className="font-bold text-gray-500">FREESHIP</span> ($5 off).
+                Try <span className="font-bold text-gray-600">SRISFIRST</span> (₹100 off on ₹499+), <span className="font-bold text-gray-600">FESTIVE20</span> (20% off), or <span className="font-bold text-gray-600">FREEDEL</span> (Free Delivery).
               </p>
             )}
           </div>

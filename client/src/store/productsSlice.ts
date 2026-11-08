@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { getProductsList } from "../services/productService";
 import toast from "react-hot-toast";
 import { Product } from "../types";
+import { sampleProducts } from "../assets/productsData";
 
 export const fetchProductsThunk = createAsyncThunk(
   "products/fetchProducts",
@@ -11,11 +12,9 @@ export const fetchProductsThunk = createAsyncThunk(
       if (data.success) {
         return data.products;
       } else {
-        toast.error(data.message);
         return rejectWithValue(data.message);
       }
     } catch (error: any) {
-      toast.error(error.message);
       return rejectWithValue(error.message);
     }
   }
@@ -28,7 +27,7 @@ interface ProductsState {
 }
 
 const initialState: ProductsState = {
-  products: [],
+  products: sampleProducts,
   loading: false,
   error: null,
 };
@@ -44,11 +43,17 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductsThunk.pending, (state) => {
-        state.loading = true;
+        state.loading = false; // keep products visible during background fetch
       })
       .addCase(fetchProductsThunk.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        if (action.payload && Array.isArray(action.payload) && action.payload.length > 0) {
+          const backendIds = new Set(action.payload.map((p: any) => p._id));
+          const remainingSamples = sampleProducts.filter((p) => !backendIds.has(p._id));
+          state.products = [...action.payload, ...remainingSamples];
+        } else {
+          state.products = sampleProducts;
+        }
       })
       .addCase(fetchProductsThunk.rejected, (state, action) => {
         state.loading = false;
