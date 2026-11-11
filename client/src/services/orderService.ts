@@ -11,6 +11,11 @@ export const placeStripeOrder = async (payload: any) => {
   return data;
 };
 
+export const verifyStripeOrder = async (sessionId: string) => {
+  const { data } = await apiClient.post(API_ROUTES.ORDER.VERIFY_STRIPE, { sessionId });
+  return data;
+};
+
 export const getUserOrders = async () => {
   const { data } = await apiClient.get(API_ROUTES.ORDER.USER_ORDERS);
   return data;

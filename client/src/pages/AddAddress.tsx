@@ -208,23 +208,15 @@ const AddAddress = () => {
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!coordinates) {
-      toast.error("Please click on the map to pin your delivery location");
-      return;
-    }
-
-    if (!isWithinRange) {
-      toast.error("Cannot save: Address is outside our 50km delivery range!");
-      return;
-    }
-
     try {
       setLoading(true);
+      const lat = coordinates ? coordinates.lat : SELLER_COORDS.lat;
+      const lng = coordinates ? coordinates.lng : SELLER_COORDS.lng;
       const addressData = {
         ...address,
         zipcode: Number(address.zipcode),
-        latitude: coordinates.lat,
-        longitude: coordinates.lng,
+        latitude: lat,
+        longitude: lng,
       };
 
       const data = await addAddress(addressData as any);
@@ -235,7 +227,7 @@ const AddAddress = () => {
         toast.error(data.message);
       }
     } catch (error: any) {
-      toast.error(error.message || "An error occurred");
+      toast.error(error.response?.data?.message || error.message || "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -330,9 +322,9 @@ const AddAddress = () => {
 
             <button
               type="submit"
-              disabled={loading || !isWithinRange}
+              disabled={loading}
               className={`w-full mt-6 bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white py-3.5 px-4 font-bold rounded-xl shadow-lg transition-all cursor-pointer uppercase flex items-center justify-center gap-2 ${
-                loading || !isWithinRange ? "opacity-75 cursor-not-allowed" : ""
+                loading ? "opacity-75 cursor-not-allowed" : ""
               }`}
             >
               {loading ? (
@@ -387,7 +379,7 @@ const AddAddress = () => {
                     isWithinRange ? "text-emerald-600" : "text-red-500"
                   }`}>
                     <span className={`w-2 h-2 rounded-full ${isWithinRange ? "bg-emerald-600 animate-ping" : "bg-red-500"}`} />
-                    {isWithinRange ? "Within Delivery Zone" : "OUT OF RANGE!"}
+                    {isWithinRange ? "Within Express 30-Min Zone" : "Standard Nationwide Delivery (2-4 Days)"}
                   </p>
                 </div>
               )}

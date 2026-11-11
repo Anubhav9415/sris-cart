@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import Rider from "../models/rider.js";
 import Order from "../models/Order.js";
 import asyncHandler from "../utils/asyncHandler.js";
+import { hydrateOrderProducts } from "../utils/orderHydration.js";
 
 // Helper to seed default riders if database is empty
 const seedRiders = async () => {
@@ -204,15 +205,16 @@ export const getAvailableOrders = asyncHandler(async (req, res) => {
   // Orders available are:
   // 1. Status is "Order Accepted" (Not assigned to anyone yet)
   // 2. Status is "Rider Assigned" or "Out for Delivery" and assigned to THIS rider
-  const orders = await Order.find({
+  const rawOrders = await Order.find({
     $or: [
       { status: "order_accepted", riderId: null },
       { riderId: riderId, status: { $in: ["rider_assigned", "out_for_delivery"] } }
     ]
   })
-    .populate("items.product address")
+    .populate("address")
     .sort({ updatedAt: -1 });
 
+  const orders = await hydrateOrderProducts(rawOrders);
   return res.json({ success: true, orders });
 });
 
@@ -309,12 +311,13 @@ export const updateRiderProfile = asyncHandler(async (req, res) => {
 // Get Rider History & Earnings : /api/rider/orders/history
 export const getRiderHistory = asyncHandler(async (req, res) => {
   const riderId = req.rider._id.toString();
-  const orders = await Order.find({
+  const rawOrders = await Order.find({
     riderId,
     status: "delivered"
   })
-    .populate("items.product address")
+    .populate("address")
     .sort({ updatedAt: -1 });
 
+  const orders = await hydrateOrderProducts(rawOrders);
   return res.json({ success: true, orders });
 });

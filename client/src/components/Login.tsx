@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import { loginUser, registerUser } from "../services/authService";
 import { setShowUserLogin as setShowUserLoginAction, fetchUserThunk } from "../store/authSlice";
@@ -9,6 +9,7 @@ import { AppDispatch } from "../store";
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const setShowUserLogin = (val) => dispatch(setShowUserLoginAction(val));
   const fetchUser = () => dispatch(fetchUserThunk());
@@ -40,13 +41,15 @@ const Login = () => {
             : "Account created successfully"
         );
 
-        navigate("/");
+        if (location.pathname !== "/cart" && location.pathname !== "/add-address") {
+          navigate("/");
+        }
         setShowUserLogin(false);
       } else {
         toast.error(data.message);
       }
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || error.message);
     } finally {
       setLoading(false);
     }

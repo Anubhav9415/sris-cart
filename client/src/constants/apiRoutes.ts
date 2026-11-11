@@ -30,6 +30,7 @@ export const API_ROUTES = {
   ORDER: {
     COD: "/api/order/cod",
     STRIPE: "/api/order/stripe",
+    VERIFY_STRIPE: "/api/order/verify-stripe",
     USER_ORDERS: "/api/order/user",
     SELLER_ORDERS: "/api/order/seller",
     UPDATE_STATUS: "/api/order/status",

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 import toast from "react-hot-toast";
-import { ArrowLeftIcon, Wallet, CreditCard, Ticket, MapPin, AlertTriangle } from "lucide-react";
+import { ArrowLeftIcon, Wallet, CreditCard, Ticket, MapPin } from "lucide-react";
 import { getAddresses } from "../services/addressService";
 import { placeCODOrder, placeStripeOrder } from "../services/orderService";
 import { CURRENCY } from "../constants";
@@ -14,6 +14,7 @@ import {
   selectCartCount,
   selectCartAmount,
 } from "../store/cartSlice";
+import { setShowUserLogin } from "../store/authSlice";
 import { RootState, AppDispatch } from "../store";
 
 const SELLER_COORDS = { lat: 22.3072, lng: 73.1812 }; // Vadodara, Gujarat
@@ -79,7 +80,7 @@ const Cart = () => {
   };
 
   const { distance: addressDistance, isWithinRange: isAddressWithinRange, hasCoords } = getAddressRangeStatus();
-  const isCheckoutDisabled = loading || !selectedAdress || !isAddressWithinRange || !hasCoords;
+  const isCheckoutDisabled = loading;
 
   // Confetti effect trigger
   const triggerConfetti = () => {
@@ -254,54 +255,68 @@ const Cart = () => {
         setAdresses(data.address);
         setSelectedAddress(data.address[0]);
       } else {
-        toast.error(data.message);
+        setAdresses([]);
+        setSelectedAddress(null);
       }
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || error?.message || "Unable to load addresses");
     }
   };
 
   const placeOrder = async () => {
     try {
-      if (!selectedAdress) {
-        return toast.error("Please select an address");
+      if (!user) {
+        toast("Please log in to complete your order", { icon: "🔒" });
+        dispatch(setShowUserLogin(true));
+        return;
       }
+      if (!selectedAdress) {
+        toast.error("Please add a delivery address to continue");
+        navigate("/add-address");
+        return;
+      }
+
+      if (paymentOption === "Online" && totalAmount < 50) {
+        toast.error("Online payment via Stripe requires at least ₹50. Please choose Cash on Delivery or add another item.");
+        return;
+      }
+
       setLoading(true);
+      const orderItemsPayload = cartArray.map((item) => ({
+        product: item._id,
+        quantity: item.quantity,
+      }));
+
       if (paymentOption === "COD") {
         const data = await placeCODOrder({
-          userId: user._id,
-          items: cartArray.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          })),
+          userId: user?._id,
+          items: orderItemsPayload,
           address: selectedAdress._id,
           discount: discountAmount,
         });
         if (data.success) {
-          toast.success(data.message);
+          toast.success(data.message || "Order placed successfully!");
           setCartItems({});
           navigate("/my-orders");
         } else {
-          toast.error(data.message);
+          toast.error(data.message || "Could not place COD order");
         }
       } else {
         const data = await placeStripeOrder({
-          userId: user._id,
-          items: cartArray.map((item) => ({
-            product: item._id,
-            quantity: item.quantity,
-          })),
+          userId: user?._id,
+          items: orderItemsPayload,
           address: selectedAdress._id,
           discount: discountAmount,
         });
-        if (data.success) {
-          window.location.replace(data.url);
+        if (data.success && data.url) {
+          window.location.assign(data.url);
         } else {
-          toast.error(data.message);
+          toast.error(data.message || "Could not initialize Stripe checkout");
         }
       }
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      const errMsg = error?.response?.data?.message || error?.message || "Order failed. Please try again.";
+      toast.error(errMsg);
     } finally {
       setLoading(false);
     }
@@ -473,63 +488,83 @@ const Cart = () => {
         <div className="space-y-5">
           <div>
             <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Delivery Address</p>
-            <div className="relative flex justify-between items-start mt-2 bg-gray-50 p-3 rounded-xl border border-gray-100 text-xs sm:text-sm">
-              <div className="space-y-1.5">
-                <p className="text-gray-600 leading-relaxed max-w-[200px]">
-                  {selectedAdress
-                    ? `${selectedAdress.street}, ${selectedAdress.city}, ${selectedAdress.state}, ${selectedAdress.country}`
-                    : "No address found"}
+            {!user ? (
+              <div className="mt-2 bg-amber-50/80 border border-amber-200 p-3 rounded-xl flex items-center justify-between gap-2">
+                <p className="text-xs font-medium text-amber-900">
+                  Log in to select or save your delivery address
                 </p>
-                {selectedAdress && (
+                <button
+                  type="button"
+                  onClick={() => dispatch(setShowUserLogin(true))}
+                  className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg shrink-0 cursor-pointer transition"
+                >
+                  Login
+                </button>
+              </div>
+            ) : !selectedAdress ? (
+              <div className="mt-2 bg-amber-50/80 border border-amber-200 p-3 rounded-xl flex items-center justify-between gap-2">
+                <p className="text-xs font-medium text-amber-900">
+                  No delivery address saved yet
+                </p>
+                <button
+                  type="button"
+                  onClick={() => navigate("/add-address")}
+                  className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-lg shrink-0 cursor-pointer transition"
+                >
+                  + Add Address
+                </button>
+              </div>
+            ) : (
+              <div className="relative flex justify-between items-start mt-2 bg-gray-50 p-3 rounded-xl border border-gray-100 text-xs sm:text-sm">
+                <div className="space-y-1.5 min-w-0 pr-2">
+                  <p className="text-gray-700 font-medium leading-relaxed break-words">
+                    {`${selectedAdress.street}, ${selectedAdress.city}, ${selectedAdress.state}, ${selectedAdress.country}`}
+                  </p>
                   <div className="pt-1 border-t border-gray-200/50">
-                    {!hasCoords ? (
-                      <p className="text-amber-600 font-semibold flex items-center gap-1 text-[11px]">
-                        <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
-                        No coordinates pinned. Please add a new address.
-                      </p>
-                    ) : isAddressWithinRange ? (
+                    {hasCoords && isAddressWithinRange ? (
                       <p className="text-emerald-600 font-semibold flex items-center gap-1 text-[11px]">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                        Within zone ({addressDistance.toFixed(2)} km)
+                        Express Delivery Zone ({addressDistance?.toFixed(1)} km)
                       </p>
                     ) : (
-                      <p className="text-red-500 font-bold flex items-center gap-1 text-[11px]">
-                        <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
-                        Out of range ({addressDistance.toFixed(2)} km)
+                      <p className="text-blue-600 font-semibold flex items-center gap-1 text-[11px]">
+                        <MapPin className="w-3.5 h-3.5 shrink-0" />
+                        Standard Nationwide Delivery (2-4 Days)
                       </p>
                     )}
                   </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowAddress(!showAddress)}
+                  className="text-amber-600 hover:text-amber-700 font-bold shrink-0 cursor-pointer"
+                >
+                  Change
+                </button>
+                {showAddress && (
+                  <div className="absolute left-0 right-0 top-full mt-1 z-20 py-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto no-scrollbar">
+                    {addresses.map((address, idx) => (
+                      <p
+                        key={idx}
+                        onClick={() => {
+                          setSelectedAddress(address);
+                          setShowAddress(false);
+                        }}
+                        className="text-gray-600 p-2.5 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-b-0"
+                      >
+                        {address.street}, {address.city}, {address.state}, {address.country}
+                      </p>
+                    ))}
+                    <p
+                      onClick={() => navigate("/add-address")}
+                      className="text-amber-600 text-center font-semibold cursor-pointer p-2.5 hover:bg-amber-50"
+                    >
+                      + Add new address
+                    </p>
+                  </div>
                 )}
               </div>
-              <button
-                onClick={() => setShowAddress(!showAddress)}
-                className="text-primary hover:text-amber-500 font-bold shrink-0 cursor-pointer"
-              >
-                Change
-              </button>
-              {showAddress && (
-                <div className="absolute left-0 right-0 top-full mt-1 z-20 py-1 bg-white border border-gray-200 rounded-xl shadow-xl max-h-48 overflow-y-auto no-scrollbar">
-                  {addresses.map((address, idx) => (
-                    <p
-                      key={idx}
-                      onClick={() => {
-                        setSelectedAddress(address);
-                        setShowAddress(false);
-                      }}
-                      className="text-gray-600 p-2.5 hover:bg-gray-50 cursor-pointer border-b border-gray-50 last:border-b-0"
-                    >
-                      {address.street}, {address.city}, {address.state}, {address.country}
-                    </p>
-                  ))}
-                  <p
-                    onClick={() => navigate("/add-address")}
-                    className="text-primary text-center font-semibold cursor-pointer p-2.5 hover:bg-primary/5"
-                  >
-                    + Add new address
-                  </p>
-                </div>
-              )}
-            </div>
+            )}
           </div>
 
           <div>
@@ -650,15 +685,21 @@ const Cart = () => {
         <button
           disabled={isCheckoutDisabled}
           onClick={placeOrder}
-          className={`w-full py-3.5 mt-6 cursor-pointer bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white font-bold rounded-xl shadow-lg shadow-yellow-500/10 hover:shadow-xl hover:shadow-yellow-500/20 transition-all duration-200 flex items-center justify-center gap-2 ${isCheckoutDisabled ? 'opacity-50 cursor-not-allowed grayscale pointer-events-none' : ''}`}
+          className={`w-full py-3.5 mt-6 cursor-pointer bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white font-bold rounded-xl shadow-lg shadow-yellow-500/10 hover:shadow-xl hover:shadow-yellow-500/20 transition-all duration-200 flex items-center justify-center gap-2 ${isCheckoutDisabled ? 'opacity-60 cursor-not-allowed' : ''}`}
         >
           {loading ? (
             <>
               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               <span>Processing...</span>
             </>
+          ) : !user ? (
+            paymentOption === "COD" ? "Login & Place Order (COD)" : "Login & Pay Online"
+          ) : !selectedAdress ? (
+            "Add Delivery Address to Order"
+          ) : paymentOption === "COD" ? (
+            "Place Order (Cash on Delivery)"
           ) : (
-            paymentOption === "COD" ? "Place Order" : "Proceed to Checkout"
+            "Proceed to Online Payment"
           )}
         </button>
       </div>

@@ -54,7 +54,7 @@ export const register = asyncHandler(async (req, res) => {
 
   return res.json({
     success: true,
-    user: { email: user.email, name: user.name },
+    user: { _id: user._id, email: user.email, name: user.name },
   });
 });
 
@@ -92,7 +92,7 @@ export const login = asyncHandler(async (req, res) => {
 
   return res.json({
     success: true,
-    user: { email: user.email, name: user.name },
+    user: { _id: user._id, email: user.email, name: user.name },
   });
 });
 
