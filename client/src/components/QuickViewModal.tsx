@@ -64,19 +64,19 @@ const QuickViewModal: React.FC<QuickViewModalProps> = ({
       : 0);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-3 md:p-6 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col md:flex-row">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-2.5 sm:p-4 md:p-6 animate-in fade-in duration-200">
+      <div className="relative w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-y-auto md:overflow-hidden max-h-[90dvh] flex flex-col md:flex-row">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 text-gray-400 hover:text-gray-700 bg-white/80 hover:bg-white rounded-full shadow-md transition cursor-pointer"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 p-2 text-gray-500 hover:text-gray-700 bg-white/90 hover:bg-white rounded-full shadow-md transition cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Left Side: Images */}
-        <div className="w-full md:w-1/2 p-6 flex flex-col items-center justify-center bg-gray-50/70 border-r border-gray-100">
-          <div className="relative w-full h-64 md:h-80 flex items-center justify-center p-4">
+        <div className="w-full md:w-1/2 p-4 sm:p-6 flex flex-col items-center justify-center bg-gray-50/70 md:border-r border-b md:border-b-0 border-gray-100 shrink-0">
+          <div className="relative w-full h-48 sm:h-64 md:h-80 flex items-center justify-center p-2 sm:p-4">
             <img
               src={images[selectedImgIdx] || images[0]}
               alt={product.name}

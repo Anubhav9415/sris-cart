@@ -65,21 +65,21 @@ const FAQ = () => {
   };
 
   return (
-    <div className="mt-16 pb-20 max-w-4xl mx-auto px-4">
+    <div className="mt-6 sm:mt-12 pb-16 max-w-4xl mx-auto px-3 sm:px-4">
       {/* Title */}
-      <div className="flex flex-col items-center text-center mb-10">
+      <div className="flex flex-col items-center text-center mb-8 sm:mb-10">
         <div className="flex items-center gap-2 text-primary">
-          <HelpCircle className="w-6 h-6 animate-pulse" />
-          <span className="text-sm font-bold uppercase tracking-widest">Support Center</span>
+          <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6 animate-pulse" />
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Support Center</span>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 mt-2">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-800 mt-2">
           Frequently Asked <span className="text-primary bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">Questions</span>
         </h1>
         <div className="w-16 h-1 bg-primary rounded-full mt-3"></div>
       </div>
 
       {/* Categories Tabs */}
-      <div className="flex justify-center gap-3 border-b border-gray-200 pb-4 mb-8">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 border-b border-gray-200 pb-4 mb-6 sm:mb-8">
         {categories.map((cat) => (
           <button
             key={cat.id}

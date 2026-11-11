@@ -55,12 +55,12 @@ const Login = () => {
   return (
     <div
       onClick={() => setShowUserLogin(false)}
-      className="fixed top-0 bottom-0 left-0 right-0 z-30 flex items-center text-sm text-gray-600 bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 text-sm text-gray-600 bg-black/60 backdrop-blur-xs"
     >
       <form
         onSubmit={onSubmitHandler}
         onClick={(e) => e.stopPropagation()}
-        className="flex flex-col gap-4 m-auto items-start p-8 py-12 w-80 sm:w-[352px] rounded-lg shadow-xl border border-gray-200 bg-white"
+        className="flex flex-col gap-4 m-auto items-start p-6 sm:p-8 py-8 sm:py-10 w-full max-w-[352px] rounded-2xl shadow-2xl border border-gray-200 bg-white max-h-[90dvh] overflow-y-auto"
       >
         <p className="text-2xl font-medium m-auto">
           {state === "login" ? (

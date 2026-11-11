@@ -52,7 +52,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="mt-16 pb-20 max-w-2xl mx-auto px-4">
+    <div className="mt-6 sm:mt-12 pb-16 max-w-2xl mx-auto px-3 sm:px-4">
       {/* Title */}
       <div className="flex flex-col items-center text-center mb-10">
         <div className="flex items-center gap-2 text-primary">

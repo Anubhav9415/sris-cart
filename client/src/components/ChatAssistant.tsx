@@ -108,16 +108,16 @@ const ChatAssistant = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-40">
+    <div className="fixed bottom-18 right-3 md:bottom-6 md:right-6 z-40">
       {/* Floating Chat Bubble Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 bg-gradient-to-br from-yellow-400 via-yellow-500 to-amber-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-yellow-500/20 hover:scale-105 transition-all duration-300 cursor-pointer relative group border-2 border-white"
+          className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-400 via-yellow-500 to-amber-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-yellow-500/20 hover:scale-105 transition-all duration-300 cursor-pointer relative group border-2 border-white"
         >
-          <Sparkles className="w-6 h-6 animate-pulse" />
+          <Sparkles className="w-5 h-5 md:w-6 md:h-6 animate-pulse" />
           {/* Tooltip */}
-          <span className="absolute -top-12 right-0 bg-gray-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-md">
+          <span className="hidden md:block absolute -top-12 right-0 bg-gray-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-md">
             Ask SrisCart AI
           </span>
         </button>
@@ -125,7 +125,7 @@ const ChatAssistant = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="w-[320px] sm:w-[380px] h-[500px] bg-white/90 backdrop-blur-md border border-gray-100 shadow-2xl rounded-2xl flex flex-col justify-between overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300">
+        <div className="w-[calc(100vw-24px)] max-w-[380px] h-[70dvh] max-h-[500px] bg-white/95 backdrop-blur-md border border-gray-100 shadow-2xl rounded-2xl flex flex-col justify-between overflow-hidden animate-in fade-in slide-in-from-bottom-6 duration-300">
           {/* Header */}
           <div className="bg-gradient-to-r from-yellow-400 to-amber-500 p-4 text-white flex items-center justify-between shadow-md">
             <div className="flex items-center gap-2">

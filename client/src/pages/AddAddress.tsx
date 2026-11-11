@@ -242,21 +242,21 @@ const AddAddress = () => {
   };
 
   return (
-    <div className="mt-16 pb-20 max-w-6xl mx-auto px-4">
-      <div className="flex flex-col items-start mb-8 border-b border-gray-100 pb-4">
-        <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
-          <MapPin className="w-8 h-8 text-primary" />
+    <div className="mt-6 sm:mt-12 pb-16 max-w-6xl mx-auto px-3 sm:px-4">
+      <div className="flex flex-col items-start mb-6 sm:mb-8 border-b border-gray-100 pb-4">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 flex items-center gap-2">
+          <MapPin className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
           <span>Add Shipping <span className="text-primary bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">Address</span></span>
         </h1>
-        <p className="text-gray-500 text-sm mt-1">Please fill in your address and pin your exact location on the map within our 50km zone.</p>
+        <p className="text-gray-500 text-xs sm:text-sm mt-1">Please fill in your address and pin your exact location on the map within our 50km zone.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
         {/* Form Column */}
-        <div className="lg:col-span-5 bg-white p-6 rounded-2xl border border-gray-100 shadow-xl shadow-gray-50/50">
-          <h2 className="text-lg font-bold text-gray-800 mb-5">Contact Details</h2>
+        <div className="lg:col-span-5 bg-white p-4 sm:p-6 rounded-2xl border border-gray-100 shadow-xl shadow-gray-50/50">
+          <h2 className="text-lg font-bold text-gray-800 mb-4 sm:mb-5">Contact Details</h2>
           <form onSubmit={onSubmitHandler} className="space-y-4 text-sm">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
               <Inputfield
                 handleChange={handleChange}
                 address={address}
@@ -366,7 +366,7 @@ const AddAddress = () => {
             </button>
           </div>
 
-          <div className="relative flex-1 min-h-[400px] bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 shadow-inner">
+          <div className="relative flex-1 min-h-[300px] sm:min-h-[400px] bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 shadow-inner">
             <div ref={mapContainerRef} className="absolute inset-0 z-10" />
             
             {/* Range Overlay Box */}

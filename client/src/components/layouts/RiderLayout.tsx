@@ -69,10 +69,10 @@ const RiderLayout: React.FC<RiderLayoutProps> = ({
           <div className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-400 via-yellow-500 to-amber-500 shadow-lg">
             <ShoppingCart className="w-6 h-6 text-white" />
           </div>
-          <span className="text-2xl font-extrabold bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 bg-clip-text text-transparent tracking-wide">
+          <span className="text-lg sm:text-2xl font-extrabold bg-gradient-to-r from-yellow-400 via-yellow-500 to-amber-500 bg-clip-text text-transparent tracking-wide">
             SrisCart
           </span>
-          <span className="text-[9px] font-black uppercase bg-amber-100 text-amber-800 px-2 py-0.5 border border-amber-200 rounded-full tracking-wider">
+          <span className="hidden xs:inline-block text-[9px] font-black uppercase bg-amber-100 text-amber-800 px-2 py-0.5 border border-amber-200 rounded-full tracking-wider">
             Rider Portal
           </span>
         </div>
@@ -139,7 +139,7 @@ const RiderLayout: React.FC<RiderLayoutProps> = ({
 
       <div className="flex pt-16 h-screen overflow-hidden">
         {/* Sidebar NavLinks */}
-        <div className="md:w-64 w-16 border-r text-base border-gray-300 pt-4 flex flex-col bg-white shrink-0">
+        <div className="md:w-64 w-14 sm:w-16 border-r text-base border-gray-300 pt-4 flex flex-col bg-white shrink-0">
           {sidebarLinks.map((item) => (
             <NavLink
               to={item.path}
@@ -158,7 +158,7 @@ const RiderLayout: React.FC<RiderLayoutProps> = ({
         </div>
 
         {/* Scrollable View Content Outlet */}
-        <div className="no-scrollbar flex-1 h-full overflow-y-scroll bg-slate-50">
+        <div className="no-scrollbar flex-1 min-w-0 h-full overflow-y-scroll overflow-x-hidden bg-slate-50">
           <Outlet context={{ rider, setRider }} />
         </div>
       </div>

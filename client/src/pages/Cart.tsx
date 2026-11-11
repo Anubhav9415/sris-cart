@@ -337,100 +337,136 @@ const Cart = () => {
   const tax = Math.round(taxableAmount * 0.02 * 100) / 100;
   const totalAmount = Math.round((taxableAmount + tax) * 100) / 100;
 
+  if (cartArray.length === 0) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 py-14 sm:py-20 text-center space-y-4">
+        <div className="w-20 h-20 rounded-full bg-amber-50 text-amber-500 flex items-center justify-center mx-auto shadow-xs">
+          <Ticket className="w-10 h-10" />
+        </div>
+        <h2 className="text-2xl font-black text-gray-900">Your Shopping Cart is Empty</h2>
+        <p className="text-xs sm:text-sm text-gray-500 max-w-md mx-auto">
+          Add fresh groceries, smartphones, electronics, and daily essentials to enjoy express delivery and exclusive deals!
+        </p>
+        <button
+          onClick={() => {
+            navigate("/products");
+            scrollTo(0, 0);
+          }}
+          className="inline-flex items-center gap-2 px-8 py-3 bg-linear-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white font-bold rounded-full shadow-md transition cursor-pointer"
+        >
+          Start Shopping
+        </button>
+      </div>
+    );
+  }
+
   return products?.length > 0 && cartItems ? (
-    <div className="flex flex-col md:flex-row mt-16 gap-8">
-      <div className="flex-1 max-w-4xl">
-        <h1 className="text-3xl font-medium mb-6">
-          Shopping Cart{" "}
-          <span className="text-sm text-primary">{getCartCount()} Items</span>
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mt-6 md:mt-10 pb-12 flex flex-col lg:flex-row gap-6 lg:gap-8">
+      <div className="flex-1 min-w-0">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 flex items-baseline gap-2 flex-wrap">
+          <span>Shopping Cart</span>
+          <span className="text-xs sm:text-sm text-amber-600 font-bold bg-amber-50 px-2.5 py-0.5 rounded-full">
+            {getCartCount()} Items
+          </span>
         </h1>
 
-        <div className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 text-base font-medium pb-3 border-b border-gray-100">
+        <div className="hidden sm:grid grid-cols-[2fr_1fr_1fr] text-gray-500 text-sm md:text-base font-medium pb-3 border-b border-gray-200">
           <p className="text-left">Product Details</p>
           <p className="text-center">Subtotal</p>
           <p className="text-center">Action</p>
         </div>
 
-        {cartArray.map((product, index) => (
-          <div
-            key={index}
-            className="grid grid-cols-[2fr_1fr_1fr] text-gray-500 items-center text-sm md:text-base font-medium pt-4 pb-4 border-b border-gray-50"
-          >
-            <div className="flex items-center md:gap-6 gap-3">
-              <div
-                onClick={() => {
-                  navigate(
-                    `/products/${product.category.toLowerCase()}/${product._id}`
-                  );
-                  scrollTo(0, 0);
-                }}
-                className="cursor-pointer w-24 h-24 flex items-center justify-center border border-gray-200 bg-white rounded-xl overflow-hidden shadow-sm"
-              >
-                <img
-                  className="max-w-full max-h-full object-contain p-2 hover:scale-105 transition duration-300"
-                  src={product.image[0]}
-                  alt={product.name}
-                />
-              </div>
-              <div>
-                <p className="font-semibold text-gray-800">{product.name}</p>
-                <div className="font-normal text-gray-500/70 text-xs sm:text-sm mt-1 space-y-0.5">
-                  <p>
-                    Category: <span className="font-medium text-gray-600">{product.category}</span>
+        <div className="space-y-3 sm:space-y-0">
+          {cartArray.map((product, index) => (
+            <div
+              key={index}
+              className="flex flex-col sm:grid sm:grid-cols-[2fr_1fr_1fr] bg-white sm:bg-transparent p-3 sm:py-4 sm:px-0 rounded-2xl sm:rounded-none border border-gray-200 sm:border-0 sm:border-b sm:border-gray-100 text-gray-500 sm:items-center text-sm md:text-base font-medium gap-3 sm:gap-2 shadow-2xs sm:shadow-none"
+            >
+              <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+                <div
+                  onClick={() => {
+                    navigate(
+                      `/products/${product.category.toLowerCase()}/${product._id}`
+                    );
+                    scrollTo(0, 0);
+                  }}
+                  className="cursor-pointer w-18 h-18 sm:w-24 sm:h-24 shrink-0 flex items-center justify-center border border-gray-200 bg-white rounded-xl overflow-hidden shadow-2xs"
+                >
+                  <img
+                    className="max-w-full max-h-full object-contain p-1.5 sm:p-2 hover:scale-105 transition duration-300"
+                    src={product.image[0]}
+                    alt={product.name}
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold text-gray-800 text-xs sm:text-sm md:text-base line-clamp-2">
+                    {product.name}
                   </p>
-                  <div className="flex items-center gap-1.5">
-                    <p>Qty:</p>
-                    <select
-                      onChange={(e) => {
-                        updateCartItem(product._id, Number(e.target.value));
-                      }}
-                      value={cartItems[product._id]}
-                      className="outline-none border border-gray-200 rounded px-1.5 py-0.5 bg-gray-50 text-xs font-semibold text-gray-700 cursor-pointer"
-                    >
-                      {Array(
-                        cartItems[product._id] > 9 ? cartItems[product._id] : 9
-                      )
-                        .fill("")
-                        .map((_, idx) => (
-                          <option key={idx} value={idx + 1}>
-                            {idx + 1}
-                          </option>
-                        ))}
-                    </select>
+                  <div className="font-normal text-gray-500/80 text-xs mt-1 space-y-1">
+                    <p className="truncate">
+                      Category: <span className="font-medium text-gray-600">{product.category}</span>
+                    </p>
+                    <div className="flex items-center gap-1.5">
+                      <p>Qty:</p>
+                      <select
+                        onChange={(e) => {
+                          updateCartItem(product._id, Number(e.target.value));
+                        }}
+                        value={cartItems[product._id]}
+                        className="outline-none border border-gray-200 rounded-lg px-2 py-0.5 bg-gray-50 text-xs font-semibold text-gray-700 cursor-pointer"
+                      >
+                        {Array(
+                          cartItems[product._id] > 9 ? cartItems[product._id] : 9
+                        )
+                          .fill("")
+                          .map((_, idx) => (
+                            <option key={idx} value={idx + 1}>
+                              {idx + 1}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Mobile Subtotal & Remove row / Desktop columns */}
+              <div className="flex items-center justify-between sm:contents pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+                <span className="text-xs text-gray-400 sm:hidden">Item Subtotal:</span>
+                <p className="sm:text-center font-black text-gray-800 text-sm sm:text-base">
+                  {currency}
+                  {(product.offerPrice * product.quantity).toLocaleString("en-IN")}
+                </p>
+                <button
+                  onClick={() => removeFromCart(product._id)}
+                  className="cursor-pointer sm:mx-auto p-1.5 sm:p-2 rounded-xl hover:bg-red-50 text-red-500 transition-colors flex items-center gap-1 text-xs"
+                  aria-label="Remove item"
+                >
+                  <img
+                    src={assets.remove_icon}
+                    alt="remove"
+                    className="inline-block w-5 h-5 sm:w-6 sm:h-6"
+                  />
+                  <span className="sm:hidden font-semibold">Remove</span>
+                </button>
+              </div>
             </div>
-            <p className="text-center font-bold text-gray-800">
-              {currency}
-              {product.offerPrice * product.quantity}
-            </p>
-            <button
-              onClick={() => removeFromCart(product._id)}
-              className="cursor-pointer mx-auto p-2 rounded-xl hover:bg-red-50 text-red-500 transition-colors"
-            >
-              <img
-                src={assets.remove_icon}
-                alt="remove"
-                className="inline-block w-6 h-6"
-              />
-            </button>
-          </div>
-        ))}
+          ))}
+        </div>
 
         <button
           onClick={() => {
             navigate("/products");
             scrollTo(0, 0);
           }}
-          className="group cursor-pointer flex items-center mt-8 gap-2 text-primary font-medium hover:text-amber-500 transition-colors"
+          className="group cursor-pointer flex items-center mt-6 sm:mt-8 gap-2 text-amber-600 font-bold text-sm hover:text-amber-700 transition-colors"
         >
           <ArrowLeftIcon className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           Continue Shopping
         </button>
       </div>
 
-      <div className="max-w-[380px] w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-xl shadow-gray-100/50 self-start">
+      <div className="w-full lg:w-[380px] xl:w-[400px] shrink-0 bg-white p-4 sm:p-6 rounded-2xl border border-gray-200/80 shadow-lg self-start">
         <h2 className="text-xl font-bold text-gray-800">Order Summary</h2>
         <hr className="border-gray-100 my-4" />
 

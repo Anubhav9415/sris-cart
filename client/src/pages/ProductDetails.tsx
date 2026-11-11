@@ -153,31 +153,31 @@ const ProductDetails: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-6 sm:space-y-8">
       {/* Breadcrumbs */}
-      <nav className="flex items-center gap-1.5 text-xs text-gray-500 overflow-x-auto whitespace-nowrap">
+      <nav className="flex items-center gap-1.5 text-xs text-gray-500 overflow-x-auto whitespace-nowrap no-scrollbar">
         <Link to="/" className="hover:text-amber-600 transition">
           Home
         </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
+        <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
         <Link to="/products" className="hover:text-amber-600 transition">
           Products
         </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
+        <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
         <Link
           to={`/products?category=${encodeURIComponent((product.category || "").toLowerCase())}`}
           className="hover:text-amber-600 transition"
         >
           {product.category}
         </Link>
-        <ChevronRight className="w-3.5 h-3.5 text-gray-400" />
-        <span className="text-gray-800 font-bold truncate max-w-xs">{product.name}</span>
+        <ChevronRight className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+        <span className="text-gray-800 font-bold truncate max-w-[180px] sm:max-w-xs">{product.name}</span>
       </nav>
 
       {/* Main Showcase Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 bg-white p-6 sm:p-8 rounded-3xl border border-gray-200/90 shadow-xs">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 bg-white p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-xs">
         {/* Left Column: Image Gallery (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col-reverse sm:flex-row gap-4">
+        <div className="lg:col-span-5 flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
           {/* Thumbnails */}
           {images.length > 1 && (
             <div className="flex sm:flex-col gap-2.5 overflow-x-auto sm:overflow-y-auto max-h-96 no-scrollbar">
@@ -185,7 +185,7 @@ const ProductDetails: React.FC = () => {
                 <button
                   key={idx}
                   onClick={() => setThumbnail(img)}
-                  className={`w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden p-1 bg-gray-50 border-2 transition cursor-pointer shrink-0 ${
+                  className={`w-14 h-14 sm:w-20 sm:h-20 rounded-xl overflow-hidden p-1 bg-gray-50 border-2 transition cursor-pointer shrink-0 ${
                     thumbnail === img
                       ? "border-amber-500 shadow-xs"
                       : "border-gray-200 opacity-70 hover:opacity-100"
@@ -198,11 +198,11 @@ const ProductDetails: React.FC = () => {
           )}
 
           {/* Primary View */}
-          <div className="relative flex-1 bg-gray-50/60 rounded-2xl p-6 flex items-center justify-center min-h-[340px] sm:min-h-[420px] overflow-hidden border border-gray-100">
+          <div className="relative flex-1 bg-gray-50/60 rounded-2xl p-4 sm:p-6 flex items-center justify-center min-h-[240px] sm:min-h-[360px] md:min-h-[420px] overflow-hidden border border-gray-100">
             <img
               src={thumbnail || images[0]}
               alt={product.name}
-              className="max-h-80 sm:max-h-96 max-w-full object-contain transition-transform duration-300 hover:scale-105"
+              className="max-h-60 sm:max-h-80 md:max-h-96 max-w-full object-contain transition-transform duration-300 hover:scale-105"
             />
 
             {discountPercent > 0 && (
@@ -260,17 +260,17 @@ const ProductDetails: React.FC = () => {
           </div>
 
           {/* Price Stack */}
-          <div className="py-3 px-4 bg-amber-50/60 rounded-2xl border border-amber-200/60 flex items-baseline gap-3">
-            <span className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">
-              {CURRENCY}{product.offerPrice}
+          <div className="py-3 px-3.5 sm:px-4 bg-amber-50/60 rounded-2xl border border-amber-200/60 flex flex-wrap items-baseline gap-2 sm:gap-3">
+            <span className="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
+              {CURRENCY}{Number(product.offerPrice).toLocaleString("en-IN")}
             </span>
             {product.price > product.offerPrice && (
               <>
-                <span className="text-base text-gray-400 line-through">
-                  MRP {CURRENCY}{product.price}
+                <span className="text-sm sm:text-base text-gray-400 line-through">
+                  MRP {CURRENCY}{Number(product.price).toLocaleString("en-IN")}
                 </span>
                 <span className="text-xs font-black text-emerald-700 bg-emerald-100 px-2.5 py-1 rounded-md">
-                  Save {CURRENCY}{product.price - product.offerPrice} ({discountPercent}%)
+                  Save {CURRENCY}{Number(product.price - product.offerPrice).toLocaleString("en-IN")} ({discountPercent}%)
                 </span>
               </>
             )}
@@ -496,7 +496,7 @@ const ProductDetails: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4">
             {relatedProducts.map((rel) => (
               <ProductCard key={rel._id} product={rel} />
             ))}

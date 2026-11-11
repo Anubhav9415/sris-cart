@@ -341,9 +341,9 @@ const TrackOrder = () => {
   const showProgress = orderStatusLower === "out_for_delivery" || orderStatusLower === "out for delivery";
 
   return (
-    <div className="mt-16 pb-20 max-w-6xl mx-auto px-4">
+    <div className="mt-6 sm:mt-12 pb-16 max-w-6xl mx-auto px-3 sm:px-4">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 sm:mb-8">
         <div>
           <button
             onClick={() => navigate("/my-orders")}
@@ -461,7 +461,7 @@ const TrackOrder = () => {
         </div>
 
         {/* Right Side: Map Container */}
-        <div className="lg:col-span-7 flex flex-col min-h-[450px] lg:min-h-0 bg-gray-100 rounded-3xl overflow-hidden border border-gray-200 shadow-inner relative">
+        <div className="lg:col-span-7 flex flex-col min-h-[320px] sm:min-h-[420px] lg:min-h-0 bg-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200 shadow-inner relative">
           <div ref={mapContainerRef} className="absolute inset-0 z-10" />
 
           {/* Floating Progress Bar */}

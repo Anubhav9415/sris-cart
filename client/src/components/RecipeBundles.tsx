@@ -5,6 +5,8 @@ import { ChefHat, ShoppingBag, Clock, Check } from "lucide-react";
 import { addToCart as addToCartAction } from "../store/cartSlice";
 import { RootState } from "../store";
 
+import { CURRENCY } from "../constants";
+
 const RecipeBundles = () => {
   const dispatch = useDispatch();
   const products = useSelector((state: RootState) => state.products.products);
@@ -107,24 +109,24 @@ const RecipeBundles = () => {
   };
 
   return (
-    <div className="mt-20">
+    <div className="mt-10 md:mt-16">
       {/* Header */}
-      <div className="flex flex-col items-start mb-10">
+      <div className="flex flex-col items-start mb-6 sm:mb-10">
         <div className="flex items-center gap-2 text-primary">
-          <ChefHat className="w-6 h-6 animate-bounce" />
-          <span className="text-sm font-bold uppercase tracking-widest">Smart Kitchen</span>
+          <ChefHat className="w-5 h-5 sm:w-6 sm:h-6 animate-bounce" />
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-widest">Smart Kitchen</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mt-2">
+        <h2 className="text-xl sm:text-3xl font-bold text-gray-800 mt-1.5">
           Smart Recipes & <span className="text-primary bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">Instant Bundles</span>
         </h2>
         <div className="w-16 h-1 bg-primary rounded-full mt-2"></div>
-        <p className="text-gray-500 text-sm mt-3 max-w-xl">
+        <p className="text-gray-500 text-xs sm:text-sm mt-2.5 max-w-xl">
           Cook your favorite meals effortlessly. Add all the fresh ingredients needed for these mouthwatering recipes directly to your shopping cart in just one tap!
         </p>
       </div>
 
       {/* Recipes Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
         {recipes.map((recipe) => {
           const resolvedIngredients = recipe.ingredients
             .map((ing) => ({
@@ -138,35 +140,35 @@ const RecipeBundles = () => {
           return (
             <div
               key={recipe.id}
-              className="group bg-white border border-gray-100 rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between"
+              className="group bg-white border border-gray-100 rounded-2xl shadow-md hover:shadow-xl md:hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between"
             >
               {/* Card Banner */}
-              <div className={`bg-gradient-to-br ${recipe.color} p-6 text-white relative`}>
-                <span className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">
+              <div className={`bg-gradient-to-br ${recipe.color} p-4 sm:p-6 text-white relative`}>
+                <span className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
                   {recipe.tag}
                 </span>
-                <div className="flex items-center gap-1.5 mt-2">
-                  <Clock className="w-4 h-4 text-white/80" />
+                <div className="flex items-center gap-1.5 mt-1 sm:mt-2">
+                  <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white/80" />
                   <span className="text-xs text-white/80 font-medium">{recipe.time} Prep</span>
                 </div>
-                <h3 className="text-2xl font-bold mt-2 leading-tight">{recipe.name}</h3>
-                <p className="text-xs text-white/70 mt-2 line-clamp-2">
+                <h3 className="text-xl sm:text-2xl font-bold mt-2 leading-tight pr-16">{recipe.name}</h3>
+                <p className="text-xs text-white/80 mt-1.5 line-clamp-2">
                   {recipe.description}
                 </p>
               </div>
 
               {/* Ingredients List */}
-              <div className="p-6 space-y-4 flex-1">
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+              <div className="p-4 sm:p-6 space-y-3 sm:space-y-4 flex-1">
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                   Required Ingredients ({resolvedIngredients.length})
                 </p>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="grid grid-cols-1 gap-2.5">
                   {resolvedIngredients.map((ing, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between border border-gray-50 rounded-xl p-2 hover:bg-gray-50/50 transition-colors"
+                      className="flex items-center justify-between border border-gray-50 rounded-xl p-2 hover:bg-gray-50/50 transition-colors gap-2"
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5 min-w-0">
                         <div className="w-10 h-10 border border-gray-100 rounded-lg p-1 bg-white flex items-center justify-center overflow-hidden shrink-0">
                           {ing.product?.image?.[0] ? (
                             <img
@@ -178,9 +180,9 @@ const RecipeBundles = () => {
                             <ShoppingBag className="w-5 h-5 text-gray-300" />
                           )}
                         </div>
-                        <div>
-                          <p className="text-sm font-semibold text-gray-700">{ing.name}</p>
-                          <p className="text-[11px] text-gray-400">
+                        <div className="min-w-0">
+                          <p className="text-xs sm:text-sm font-semibold text-gray-700 truncate">{ing.name}</p>
+                          <p className="text-[10px] sm:text-[11px] text-gray-400">
                             {ing.product ? (
                               ing.product.inStock ? (
                                 <span className="text-emerald-500 font-medium">In Stock</span>
@@ -195,8 +197,8 @@ const RecipeBundles = () => {
                       </div>
 
                       {ing.product && (
-                        <span className="text-xs font-bold text-primary mr-1">
-                          ${ing.product.offerPrice}
+                        <span className="text-xs font-bold text-amber-600 shrink-0">
+                          {CURRENCY}{ing.product.offerPrice}
                         </span>
                       )}
                     </div>
@@ -205,11 +207,11 @@ const RecipeBundles = () => {
               </div>
 
               {/* Action Button */}
-              <div className="p-6 pt-0">
+              <div className="p-4 sm:p-6 pt-0">
                 <button
                   disabled={addingRecipe === recipe.id}
                   onClick={() => handleAddBundle(recipe)}
-                  className={`w-full py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-yellow-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed text-sm`}
+                  className={`w-full py-2.5 sm:py-3 bg-gradient-to-r from-yellow-400 to-amber-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-yellow-500/20 active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 disabled:cursor-not-allowed text-xs sm:text-sm`}
                 >
                   {addingRecipe === recipe.id ? (
                     <>

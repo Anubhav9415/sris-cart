@@ -29,19 +29,19 @@ const Contact = () => {
   };
 
   return (
-    <div className="mt-16 pb-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="mt-6 sm:mt-12 pb-16 max-w-6xl mx-auto px-3 sm:px-6 lg:px-8">
       {/* Page Title */}
-      <div className="flex flex-col items-center text-center mb-12">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 tracking-tight">
+      <div className="flex flex-col items-center text-center mb-8 sm:mb-12">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-800 tracking-tight">
           Contact <span className="text-primary bg-gradient-to-r from-yellow-400 to-amber-500 bg-clip-text text-transparent">Us</span>
         </h1>
         <div className="w-20 h-1 bg-primary rounded-full mt-3"></div>
-        <p className="text-gray-500 mt-4 max-w-md text-sm sm:text-base">
+        <p className="text-gray-500 mt-3 sm:mt-4 max-w-md text-xs sm:text-base">
           Have questions, feedback, or need help? We'd love to hear from you. Reach out and our team will get right back to you!
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-start">
         {/* Left Column: Contact Cards */}
         <div className="lg:col-span-5 space-y-6">
           <div className="bg-white border border-gray-100 shadow-xl shadow-gray-100/50 rounded-2xl p-6 sm:p-8 space-y-6">

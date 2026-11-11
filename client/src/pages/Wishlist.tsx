@@ -55,9 +55,9 @@ const Wishlist: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 space-y-5 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-gray-200">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 pb-4 border-b border-gray-200">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
@@ -72,7 +72,7 @@ const Wishlist: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={() => dispatch(clearWishlist())}
             className="text-xs font-bold text-gray-500 hover:text-red-600 px-3 py-2 rounded-xl border border-gray-200 hover:border-red-300 transition cursor-pointer"
@@ -81,7 +81,7 @@ const Wishlist: React.FC = () => {
           </button>
           <button
             onClick={handleMoveAllToCart}
-            className="flex items-center gap-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl shadow-xs transition cursor-pointer"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-1.5 text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl shadow-xs transition cursor-pointer"
           >
             <ShoppingCart className="w-4 h-4" /> Move All to Cart
           </button>
@@ -89,7 +89,7 @@ const Wishlist: React.FC = () => {
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4">
         {wishlistItems.map((item) => {
           const discountPercent =
             item.discount ||
@@ -158,13 +158,13 @@ const Wishlist: React.FC = () => {
 
               {/* Price & Action */}
               <div className="pt-2 border-t border-gray-100 space-y-2">
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-base font-black text-gray-900">
-                    {CURRENCY}{item.offerPrice}
+                <div className="flex flex-wrap items-baseline gap-1.5">
+                  <span className="text-sm sm:text-base font-black text-gray-900">
+                    {CURRENCY}{Number(item.offerPrice).toLocaleString("en-IN")}
                   </span>
                   {item.price > item.offerPrice && (
-                    <span className="text-xs text-gray-400 line-through">
-                      {CURRENCY}{item.price}
+                    <span className="text-[11px] sm:text-xs text-gray-400 line-through">
+                      {CURRENCY}{Number(item.price).toLocaleString("en-IN")}
                     </span>
                   )}
                 </div>

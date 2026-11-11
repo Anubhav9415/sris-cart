@@ -25,18 +25,18 @@ const ProductCarouselSection: React.FC<ProductCarouselSectionProps> = ({
 
   const handleScroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const scrollAmount = direction === "left" ? -460 : 460;
+      const scrollAmount = direction === "left" ? -420 : 420;
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
     }
   };
 
   return (
-    <section className="relative my-8 md:my-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section className="relative my-6 sm:my-10 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Section Header */}
-      <div className="flex items-end justify-between mb-4 pb-2 border-b border-gray-100">
-        <div>
-          <div className="flex items-center gap-2 mb-0.5">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+      <div className="flex items-end justify-between gap-2 mb-3 sm:mb-4 pb-2 border-b border-gray-100">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight leading-tight">
               {title}
             </h2>
             {badge && (
@@ -46,24 +46,23 @@ const ProductCarouselSection: React.FC<ProductCarouselSectionProps> = ({
             )}
           </div>
           {subtitle && (
-            <p className="text-xs sm:text-sm text-gray-500 font-medium">
+            <p className="text-[11px] sm:text-sm text-gray-500 font-medium line-clamp-1">
               {subtitle}
             </p>
           )}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {viewAllLink && (
             <Link
               to={viewAllLink}
-              className="text-xs sm:text-sm font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 group transition"
+              className="text-xs sm:text-sm font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 group transition whitespace-nowrap"
             >
               <span>View All</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           )}
 
-          {/* Prev / Next Chevrons */}
           <div className="hidden sm:flex items-center gap-1">
             <button
               onClick={() => handleScroll("left")}
@@ -86,13 +85,12 @@ const ProductCarouselSection: React.FC<ProductCarouselSectionProps> = ({
       {/* Horizontal Scroll Track */}
       <div
         ref={scrollRef}
-        className="flex items-stretch gap-3 sm:gap-4 overflow-x-auto pb-4 pt-1 scroll-smooth no-scrollbar"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        className="flex items-stretch gap-2.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scroll-smooth no-scrollbar snap-x"
       >
         {products.map((product) => (
           <div
             key={product._id}
-            className="w-48 sm:w-56 md:w-64 shrink-0 flex"
+            className="w-[164px] xs:w-[178px] sm:w-52 md:w-60 shrink-0 flex snap-start"
           >
             <ProductCard product={product} />
           </div>
@@ -103,4 +101,3 @@ const ProductCarouselSection: React.FC<ProductCarouselSectionProps> = ({
 };
 
 export default ProductCarouselSection;
-

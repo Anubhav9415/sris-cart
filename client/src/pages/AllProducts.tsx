@@ -157,11 +157,11 @@ const AllProducts: React.FC = () => {
   }, [filteredProducts, sortBy]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
       {/* Top Header & Search Bar */}
-      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-gray-200/90 shadow-xs flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div className="bg-white p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
             {selectedCategory === "All" ? "All Products" : `${selectedCategory}`}
           </h1>
           <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
@@ -170,21 +170,21 @@ const AllProducts: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           {/* Quick Filter Search Box */}
-          <div className="relative flex-1 sm:w-72">
+          <div className="relative flex-1 min-w-[160px] sm:w-64 md:w-72">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => handleSearchChange(e.target.value)}
-              placeholder="Filter by name or brand..."
+              placeholder="Filter name or brand..."
               className="w-full pl-9 pr-8 py-2 text-xs bg-gray-50 border border-gray-200 rounded-xl focus:border-amber-400 outline-none"
             />
             {searchTerm && (
               <button
                 onClick={() => handleSearchChange("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -195,7 +195,7 @@ const AllProducts: React.FC = () => {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-3 py-2 text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-xl focus:border-amber-400 outline-none cursor-pointer"
+            className="px-2.5 sm:px-3 py-2 text-xs font-bold text-gray-700 bg-gray-50 border border-gray-200 rounded-xl focus:border-amber-400 outline-none cursor-pointer"
           >
             <option value="featured">Sort: Featured</option>
             <option value="bestseller">Sort: Best Sellers</option>
@@ -211,7 +211,7 @@ const AllProducts: React.FC = () => {
             className="md:hidden flex items-center gap-1.5 px-3 py-2 bg-amber-500 text-white font-bold text-xs rounded-xl shadow-xs cursor-pointer"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Filters</span>
+            <span>{mobileFilterOpen ? "Hide Filters" : "Filters"}</span>
           </button>
         </div>
       </div>
@@ -325,12 +325,19 @@ const AllProducts: React.FC = () => {
               ))}
             </div>
           </div>
+
+          <button
+            onClick={() => setMobileFilterOpen(false)}
+            className="md:hidden w-full py-2.5 bg-gray-900 text-white text-xs font-bold rounded-xl cursor-pointer"
+          >
+            Apply & View {sortedProducts.length} Products
+          </button>
         </div>
 
-        {/* Product Grid (3 cols on desktop) */}
+        {/* Product Grid */}
         <div className="md:col-span-3 space-y-6">
           {sortedProducts.length === 0 ? (
-            <div className="bg-white p-12 rounded-3xl border border-gray-200 text-center space-y-4">
+            <div className="bg-white p-8 sm:p-12 rounded-3xl border border-gray-200 text-center space-y-4">
               <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto">
                 <Search className="w-8 h-8" />
               </div>
@@ -346,7 +353,7 @@ const AllProducts: React.FC = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4">
               {sortedProducts.map((prod) => (
                 <ProductCard key={prod._id} product={prod} />
               ))}

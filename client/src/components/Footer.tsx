@@ -16,11 +16,11 @@ const Footer: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-white border-t border-gray-200 mt-20">
+    <footer className="bg-white border-t border-gray-200 mt-12 md:mt-20 pb-20 md:pb-0">
       {/* Trust & Guarantee Banner */}
-      <div className="bg-amber-50/70 border-b border-amber-200/60 py-8">
+      <div className="bg-amber-50/70 border-b border-amber-200/60 py-6 sm:py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center shrink-0">
                 <Truck className="w-6 h-6" />
@@ -65,10 +65,10 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Main Footer Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Brand Col */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="col-span-2 md:col-span-3 lg:col-span-2 space-y-4">
             <div
               onClick={() => {
                 navigate("/");
@@ -218,9 +218,9 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Payment Methods & Copyright */}
-        <div className="pt-8 mt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <div className="pt-6 sm:pt-8 mt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 text-center sm:text-left">
           <p>© {new Date().getFullYear()} SrisCart E-Commerce Private Limited. All rights reserved.</p>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
             <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">
               100% Safe Payments:
             </span>

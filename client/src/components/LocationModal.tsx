@@ -110,10 +110,10 @@ const LocationModal: React.FC<LocationModalProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
-      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-3 sm:p-4 animate-in fade-in duration-200">
+      <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 max-h-[90dvh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-linear-to-r from-amber-50 to-orange-50">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-gray-100 bg-linear-to-r from-amber-50 to-orange-50 shrink-0">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-primary/20 text-amber-700 flex items-center justify-center">
               <MapPin className="w-5 h-5 text-amber-600" />
@@ -136,7 +136,7 @@ const LocationModal: React.FC<LocationModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-5">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto">
           {/* Custom Pincode Input Form */}
           <form onSubmit={handleApplyPincode} className="space-y-2">
             <label className="text-xs font-semibold uppercase tracking-wider text-gray-600">

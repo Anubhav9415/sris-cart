@@ -11,19 +11,19 @@ const Offers = () => {
 
   const coupons = [
     {
-      code: "FREESHIP",
-      description: "Free delivery on all grocery orders with no minimum order value.",
+      code: "FREEDEL",
+      description: "Free express delivery on all orders with ₹40 instant shipping waiver.",
       tag: "Free Shipping"
     },
     {
-      code: "SRIS20",
-      description: "Get 20% off on your first order of fresh fruits and organic vegetables.",
-      tag: "New User Offer"
+      code: "FESTIVE20",
+      description: "Get 20% off instantly across fresh groceries, electronics & fashion.",
+      tag: "Mega Offer"
     },
     {
-      code: "FESTIVE10",
-      description: "Flat $10 cashback on orders above $100 using online payment.",
-      tag: "Cashback Deal"
+      code: "SRISFIRST",
+      description: "Flat ₹100 instant savings on orders above ₹499 using any payment mode.",
+      tag: "Welcome Deal"
     }
   ];
 
@@ -40,7 +40,7 @@ const Offers = () => {
     : [];
 
   return (
-    <div className="mt-16 pb-20 max-w-6xl mx-auto px-4">
+    <div className="mt-6 sm:mt-12 pb-16 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       {/* Title */}
       <div className="flex flex-col items-center text-center mb-12">
         <div className="flex items-center gap-2 text-primary">
@@ -106,7 +106,7 @@ const Offers = () => {
         {discountedProducts.length === 0 ? (
           <p className="text-gray-500 text-sm">No promotional discounts are active today. Check back later!</p>
         ) : (
-          <div className="grid grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-6 w-full">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-4 w-full">
             {discountedProducts.map((product) => (
               <div key={product._id} className="min-w-0 w-full h-full">
                 <ProductCard product={product} />

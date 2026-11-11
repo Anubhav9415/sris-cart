@@ -73,33 +73,34 @@ const Categories: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="my-8 md:my-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-5">
-        <div>
+    <section className="my-6 sm:my-10 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between gap-2 mb-4 sm:mb-5">
+        <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
               Shop by Category
             </h2>
             <span className="text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full hidden sm:inline-flex items-center gap-1">
               <Sparkles className="w-3 h-3 text-amber-500" /> Explore Collections
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-gray-500 font-medium">
+          <p className="text-[11px] sm:text-sm text-gray-500 font-medium line-clamp-1">
             Find everything you need across our handpicked departments
           </p>
         </div>
 
         <button
           onClick={() => navigate("/products")}
-          className="text-xs sm:text-sm font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 group cursor-pointer"
+          className="text-xs sm:text-sm font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 group cursor-pointer shrink-0 whitespace-nowrap"
         >
-          <span>All Departments</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <span>All</span>
+          <span className="hidden sm:inline">Departments</span>
+          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-4">
         {FEATURED_CATEGORIES.map((cat, index) => (
           <div
             key={index}
@@ -107,10 +108,10 @@ const Categories: React.FC = () => {
               navigate(`/products?category=${encodeURIComponent(cat.query.toLowerCase())}`);
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className={`group relative rounded-2xl p-3 border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer flex flex-col items-center text-center ${cat.bgColor}`}
+            className={`group relative rounded-2xl p-2.5 sm:p-3 border transition-all duration-300 hover:shadow-lg md:hover:-translate-y-1 cursor-pointer flex flex-col items-center text-center ${cat.bgColor}`}
           >
             {/* Image Circle */}
-            <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full overflow-hidden mb-2 bg-white p-1 shadow-2xs group-hover:scale-108 transition-transform duration-300">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden mb-1.5 sm:mb-2 bg-white p-1 shadow-2xs group-hover:scale-108 transition-transform duration-300">
               <img
                 src={cat.image}
                 alt={cat.name}
@@ -119,12 +120,12 @@ const Categories: React.FC = () => {
             </div>
 
             {/* Title */}
-            <h4 className="text-xs font-bold text-gray-800 leading-tight group-hover:text-amber-700 transition-colors">
+            <h4 className="text-[11px] sm:text-xs font-bold text-gray-800 leading-tight group-hover:text-amber-700 transition-colors">
               {cat.name}
             </h4>
 
             {/* Tag */}
-            <span className="text-[10px] font-semibold text-gray-500 mt-0.5">
+            <span className="text-[9px] sm:text-[10px] font-semibold text-gray-500 mt-0.5">
               {cat.tag}
             </span>
           </div>

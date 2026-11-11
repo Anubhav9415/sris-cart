@@ -65,32 +65,32 @@ const TopBrands: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="my-8 md:my-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mb-5">
-        <div>
+    <section className="my-6 sm:my-10 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div className="flex items-center justify-between gap-2 mb-4 sm:mb-5">
+        <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-gray-900 tracking-tight">
               Top Official Brands
             </h2>
             <span className="text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full hidden sm:inline-flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> 100% Authentic
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-gray-500 font-medium">
+          <p className="text-[11px] sm:text-sm text-gray-500 font-medium line-clamp-1">
             Direct from brand authorized distributors with full manufacturer warranty
           </p>
         </div>
 
         <button
           onClick={() => navigate("/products")}
-          className="text-xs sm:text-sm font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 group cursor-pointer"
+          className="text-xs sm:text-sm font-bold text-amber-600 hover:text-amber-700 flex items-center gap-1 group cursor-pointer shrink-0 whitespace-nowrap"
         >
           <span>All Brands</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-4">
         {TOP_BRANDS.map((brand, idx) => (
           <div
             key={idx}
@@ -98,9 +98,9 @@ const TopBrands: React.FC = () => {
               navigate(`/products?search=${encodeURIComponent(brand.name)}`);
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="group relative bg-white border border-gray-200 hover:border-amber-400 rounded-2xl p-3 flex flex-col items-center text-center shadow-2xs hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+            className="group relative bg-white border border-gray-200 hover:border-amber-400 rounded-2xl p-2.5 sm:p-3 flex flex-col items-center text-center shadow-2xs hover:shadow-lg transition-all duration-300 md:hover:-translate-y-1 cursor-pointer"
           >
-            <div className="w-14 h-14 rounded-xl overflow-hidden mb-2 bg-gray-50 p-1 border border-gray-100 group-hover:scale-108 transition-transform">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden mb-1.5 sm:mb-2 bg-gray-50 p-1 border border-gray-100 group-hover:scale-108 transition-transform">
               <img
                 src={brand.logo}
                 alt={brand.name}

@@ -81,50 +81,50 @@ const Home: React.FC = () => {
   }, [products]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-16">
+    <div className="min-h-screen bg-slate-50/50 pb-8 md:pb-14">
       {/* 1. Main Hero Carousel & Promo Cards */}
       <MainBanner />
 
       {/* Trust Badges Strip */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 py-3.5 px-4 bg-white rounded-2xl border border-gray-200/80 shadow-2xs">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600">
-              <Zap className="w-5 h-5 fill-amber-500 text-amber-500" />
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 mt-4 sm:mt-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 py-3 px-3 sm:px-4 bg-white rounded-2xl border border-gray-200/80 shadow-2xs">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 shrink-0">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-amber-500 text-amber-500" />
             </div>
-            <div>
-              <p className="text-xs font-black text-gray-800">Express 9 Mins</p>
-              <p className="text-[10px] text-gray-500">Superfast local delivery</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
-              <ShieldCheck className="w-5 h-5 text-emerald-600" />
-            </div>
-            <div>
-              <p className="text-xs font-black text-gray-800">100% Genuine</p>
-              <p className="text-[10px] text-gray-500">Directly from brands</p>
+            <div className="min-w-0">
+              <p className="text-[11px] sm:text-xs font-black text-gray-800 truncate">Express 9 Mins</p>
+              <p className="text-[9px] sm:text-[10px] text-gray-500 truncate">Superfast local delivery</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
-              <Truck className="w-5 h-5 text-blue-600" />
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
             </div>
-            <div>
-              <p className="text-xs font-black text-gray-800">Free Delivery</p>
-              <p className="text-[10px] text-gray-500">On all orders above ₹499</p>
+            <div className="min-w-0">
+              <p className="text-[11px] sm:text-xs font-black text-gray-800 truncate">100% Genuine</p>
+              <p className="text-[9px] sm:text-[10px] text-gray-500 truncate">Directly from brands</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
-              <Clock className="w-5 h-5 text-purple-600" />
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 shrink-0">
+              <Truck className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
             </div>
-            <div>
-              <p className="text-xs font-black text-gray-800">Easy Returns</p>
-              <p className="text-[10px] text-gray-500">Doorstep return pickup</p>
+            <div className="min-w-0">
+              <p className="text-[11px] sm:text-xs font-black text-gray-800 truncate">Free Delivery</p>
+              <p className="text-[9px] sm:text-[10px] text-gray-500 truncate">On orders above ₹499</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 shrink-0">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[11px] sm:text-xs font-black text-gray-800 truncate">Easy Returns</p>
+              <p className="text-[9px] sm:text-[10px] text-gray-500 truncate">Doorstep return pickup</p>
             </div>
           </div>
         </div>
@@ -227,17 +227,17 @@ const Home: React.FC = () => {
       <TopBrands />
 
       {/* 14. Bundles & Value Deals */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 my-4 sm:my-6">
         <RecipeBundles />
       </div>
 
       {/* 15. Promotional Bottom Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 my-4 sm:my-6">
         <BottomBanner />
       </div>
 
       {/* 16. Newsletter */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 my-4 sm:my-6">
         <NewsLetter />
       </div>
     </div>

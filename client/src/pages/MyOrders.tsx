@@ -60,10 +60,10 @@ const MyOrders = () => {
   }
 
   return (
-    <div className="mt-20 pb-20 max-w-5xl mx-auto px-4">
+    <div className="mt-6 sm:mt-12 pb-16 max-w-5xl mx-auto px-3 sm:px-4">
       {/* Title */}
-      <div className="flex flex-col items-start mb-8 space-y-1">
-        <h1 className="text-3xl font-extrabold text-gray-800">My Orders</h1>
+      <div className="flex flex-col items-start mb-6 sm:mb-8 space-y-1">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">My Orders</h1>
         <div className="w-16 h-1.5 bg-primary rounded-full"></div>
       </div>
 
@@ -149,8 +149,8 @@ const MyOrders = () => {
                   </div>
 
                   {/* Status, Track Button, Chevron Toggle */}
-                  <div className="flex items-center justify-between md:justify-end gap-4 border-t md:border-t-0 pt-3 md:pt-0">
-                    <div className="flex items-center gap-3">
+                  <div className="flex flex-wrap items-center justify-between md:justify-end gap-2 sm:gap-4 border-t md:border-t-0 pt-3 md:pt-0">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 w-full md:w-auto justify-between md:justify-end">
                       {/* Active Status Badge */}
                       <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
                         statusLower === "order_placed" || statusLower === "order placed" ? "bg-slate-50 border-slate-200 text-slate-700" :

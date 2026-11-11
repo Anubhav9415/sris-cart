@@ -429,17 +429,17 @@ const SpinWheel = () => {
   return (
     <>
       {/* Floating Trigger Action Button Container */}
-      <div className="fixed bottom-6 left-6 z-40">
+      <div className="fixed bottom-18 left-3 md:bottom-6 md:left-6 z-40">
         <button
           onClick={() => setIsOpen(true)}
-          className="w-14 h-14 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-orange-500/20 hover:scale-105 transition-all duration-300 border-2 border-white relative group cursor-pointer"
+          className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-full flex items-center justify-center text-white shadow-xl shadow-orange-500/20 hover:scale-105 transition-all duration-300 border-2 border-white relative group cursor-pointer"
         >
           <div className="relative">
-            <Gift className="w-6 h-6 animate-pulse" />
+            <Gift className="w-5 h-5 md:w-6 md:h-6 animate-pulse" />
             <div className="absolute -top-1.5 -right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-ping" />
           </div>
           {/* Tooltip */}
-          <span className="absolute -top-12 left-0 bg-gray-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-md pointer-events-none">
+          <span className="hidden md:block absolute -top-12 left-0 bg-gray-900 text-white text-xs font-semibold px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-md pointer-events-none">
             Spin & Save!
           </span>
         </button>
@@ -447,8 +447,8 @@ const SpinWheel = () => {
 
       {/* Modal Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[100] p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative border border-gray-100 flex flex-col items-center">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[100] p-3 sm:p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-8 max-w-md w-full max-h-[92dvh] overflow-y-auto shadow-2xl relative border border-gray-100 flex flex-col items-center">
             
             {/* Header controls */}
             <div className="w-full flex justify-between items-center mb-4 border-b border-gray-100 pb-3">
@@ -488,7 +488,7 @@ const SpinWheel = () => {
                 ref={canvasRef}
                 width={300}
                 height={300}
-                className="w-[280px] h-[280px] md:w-[300px] md:h-[300px] rounded-full border-4 border-gray-800 shadow-xl bg-gray-50"
+                className="w-[230px] h-[230px] sm:w-[280px] sm:h-[280px] md:w-[300px] md:h-[300px] rounded-full border-4 border-gray-800 shadow-xl bg-gray-50"
               />
 
               {/* Center Trigger Button overlay */}
